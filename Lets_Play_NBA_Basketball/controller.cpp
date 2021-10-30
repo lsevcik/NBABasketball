@@ -3,7 +3,7 @@
 Controller::Controller(QObject * parent) : QObject(parent)
 {
     m_database = QSqlDatabase::addDatabase("QSQLITE");
-    QString path = "C://Users//Nicholas//Documents//Lets_Play_NBA_Basketball//NBA_Information.db";
+    QString path = "..NBA_Information.db";
     m_database.setDatabaseName(path);
 
     if (!m_database.open())
