@@ -1,3 +1,4 @@
+#include "loginDialog.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -8,11 +9,15 @@ MainWindow::MainWindow(Controller *controller, QWidget *parent)
 {
     ui->setupUi(this);
 
+    ui->tabWidget->setTabVisible(1, false);
+
     test();
 }
 
 MainWindow::~MainWindow()
 {
+    if (m_loginDialog)
+        delete m_loginDialog;
     delete ui;
 }
 
@@ -23,6 +28,12 @@ void MainWindow::test()
     ui->editStadiumData_comboBox->setModel(m_controller->getStadiumsDataQueryModel("SELECT [Arena Name] FROM Stadiums ORDER BY [Arena Name] ASC"));
 }
 
+void MainWindow::on_loginCallback(bool succ)
+{
+    delete m_loginDialog;
+    m_loginDialog = nullptr;
+    ui->tabWidget->setTabVisible(1, succ);
+}
 void MainWindow::on_editStadiumData_comboBox_currentTextChanged(const QString &arg1)
 {
     QSqlQuery qry;
@@ -77,3 +88,15 @@ void MainWindow::on_editData_pushButton_clicked()
     ui->editStadiumData_tableView->resizeColumnsToContents();
 }
 
+void MainWindow::on_actionLogin_triggered()
+{
+    if (!m_loginDialog)
+        m_loginDialog = new loginDialog(this);
+    m_loginDialog->exec();
+}
+
+
+void MainWindow::on_actionQuit_triggered()
+{
+    QApplication::quit();
+}

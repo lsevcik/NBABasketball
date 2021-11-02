@@ -13,14 +13,17 @@ CONFIG+=force_debug_info
 SOURCES += \
     controller.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    loginDialog.cpp
 
 HEADERS += \
     controller.h \
-    mainwindow.h
+    mainwindow.h \
+    loginDialog.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    loginDialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
