@@ -28,7 +28,7 @@ public:
     QSqlQueryModel *getStadiumsDataQueryModel(QString query);
 
     void editStadiumData(QString conference, QString division, QString teamName,
-                         QString location, QString arenaName, int stadiumCapacity,
+                         QString location, QString newArenaName, QString oldArenaName, int stadiumCapacity,
                          int joinedLeague, QString coach);
 
 private:

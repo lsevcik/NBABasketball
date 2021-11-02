@@ -27,7 +27,7 @@ QSqlQueryModel* Controller::getStadiumsDataQueryModel(QString query)
 }
 
 void Controller::editStadiumData(QString conference, QString division, QString teamName,
-                     QString location, QString arenaName, int stadiumCapacity,
+                     QString location, QString newArenaName, QString oldArenaName, int stadiumCapacity,
                      int joinedLeague, QString coach)
 {
     QSqlQuery qry;
@@ -47,11 +47,11 @@ void Controller::editStadiumData(QString conference, QString division, QString t
     qry.addBindValue(division);
     qry.addBindValue(teamName);
     qry.addBindValue(location);
-    qry.addBindValue(arenaName);
+    qry.addBindValue(newArenaName);
     qry.addBindValue(stadiumCapacity);
     qry.addBindValue(QString::number(joinedLeague));
     qry.addBindValue(coach);
-    qry.addBindValue(arenaName);
+    qry.addBindValue(oldArenaName);
 
     if (!qry.exec())
         throw std::runtime_error(qry.lastError().text().toStdString());

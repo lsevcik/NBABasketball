@@ -29,6 +29,12 @@ private slots:
 
     void on_actionLogin_triggered();
 
+    void on_showSingleStadium_radioButton_clicked();
+
+    void showSingleStadium();
+
+private:
+
     void on_actionQuit_triggered();
 
 private:
