@@ -20,6 +20,7 @@ void MainWindow::test()
 {
     ui->editStadiumData_tableView->setModel(m_controller->getStadiumsDataQueryModel("SELECT * FROM Stadiums"));
     ui->editStadiumData_tableView->resizeColumnsToContents();
+    ui->editConference_comboBox->setModel(m_controller->getStadiumsDataQueryModel("SELECT DISTINCT [Conference] FROM Stadiums"));
     ui->editStadiumData_comboBox->setModel(m_controller->getStadiumsDataQueryModel("SELECT [Arena Name] FROM Stadiums ORDER BY [Arena Name] ASC"));
 }
 
@@ -34,11 +35,16 @@ void MainWindow::on_editStadiumData_comboBox_currentTextChanged(const QString &a
 
     if (!qry.exec())
         qDebug() << "ERROR IN test()";
+
     else {
 
         if (qry.first()) {
 
-            ui->editConference_lineEdit->setText(qry.value(0).toString());
+            if (qry.value(0).toString() == "Eastern")
+                ui->editConference_comboBox->setCurrentIndex(0);
+            else
+                ui->editConference_comboBox->setCurrentIndex(1);
+
             ui->editDivision_lineEdit->setText(qry.value(1).toString());
             ui->editTeamName_lineEdit->setText(qry.value(2).toString());
             ui->editLocation_lineEdit->setText(qry.value(3).toString());
@@ -47,7 +53,7 @@ void MainWindow::on_editStadiumData_comboBox_currentTextChanged(const QString &a
             ui->editJoinedLeague_spinBox->setValue(qry.value(6).toInt());
             ui->editCoach_lineEdit->setText(qry.value(7).toString());
         }
-    }
+    }    
 }
 
 void MainWindow::on_editDataReset_pushButton_clicked()
@@ -57,23 +63,55 @@ void MainWindow::on_editDataReset_pushButton_clicked()
 
 void MainWindow::on_editData_pushButton_clicked()
 {
-    QString conference, division, teamName, location, arenaName, coach;
-    int stadiumCapacity, joinedLeague;
+    QMessageBox::StandardButton reply =
+            QMessageBox::question(this, "Edit", "Are you sure you want to edit the stadium?",
+                                  QMessageBox::Yes | QMessageBox::No);
 
-    conference = ui->editConference_lineEdit->text();
-    division = ui->editDivision_lineEdit->text();
-    teamName = ui->editTeamName_lineEdit->text();
-    location = ui->editLocation_lineEdit->text();
-    arenaName = ui->editArenaName_lineEdit->text();
-    stadiumCapacity = ui->editStadiumCapacity_spinBox->value();
-    joinedLeague = ui->editJoinedLeague_spinBox->value();
-    coach = ui->editCoach_lineEdit->text();
+    if (reply == QMessageBox::Yes) {
 
-    m_controller->editStadiumData(conference, division, teamName,
-                                  location, arenaName, stadiumCapacity,
-                                  joinedLeague, coach);
+        QString conference, division, teamName, location, newArenaName, oldArenaName, coach;
+        int stadiumCapacity, joinedLeague;
 
-    ui->editStadiumData_tableView->setModel(m_controller->getStadiumsDataQueryModel("SELECT * FROM Stadiums"));
-    ui->editStadiumData_tableView->resizeColumnsToContents();
+        conference = ui->editConference_comboBox->currentText();
+        division = ui->editDivision_lineEdit->text();
+        teamName = ui->editTeamName_lineEdit->text();
+        location = ui->editLocation_lineEdit->text();
+        newArenaName = ui->editArenaName_lineEdit->text();
+        oldArenaName = ui->editStadiumData_comboBox->currentText();
+        stadiumCapacity = ui->editStadiumCapacity_spinBox->value();
+        joinedLeague = ui->editJoinedLeague_spinBox->value();
+        coach = ui->editCoach_lineEdit->text();
+
+        m_controller->editStadiumData(conference, division, teamName,
+                                      location, newArenaName, oldArenaName, stadiumCapacity,
+                                      joinedLeague, coach);
+
+        ui->editStadiumData_comboBox->setModel(m_controller->getStadiumsDataQueryModel("SELECT [Arena Name] FROM Stadiums ORDER BY [Arena Name] ASC"));
+        showSingleStadium();
+    }
 }
+
+void MainWindow::on_showSingleStadium_radioButton_clicked()
+{
+    showSingleStadium();
+}
+
+void MainWindow::showSingleStadium()
+{
+    QString arenaName = ui->editStadiumData_comboBox->currentText();
+
+    if (ui->showSingleStadium_radioButton->isChecked()) {
+
+        ui->editStadiumData_tableView->setModel(m_controller->getStadiumsDataQueryModel("SELECT * FROM Stadiums WHERE [Arena Name] = '"+arenaName+"';"));
+        ui->editStadiumData_tableView->resizeColumnsToContents();
+    }
+
+    else {
+
+        ui->editStadiumData_tableView->setModel(m_controller->getStadiumsDataQueryModel("SELECT * FROM Stadiums"));
+        ui->editStadiumData_tableView->resizeColumnsToContents();
+    }
+}
+
+
 

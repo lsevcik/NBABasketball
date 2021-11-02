@@ -23,6 +23,10 @@ private slots:
 
     void on_editData_pushButton_clicked();
 
+    void on_showSingleStadium_radioButton_clicked();
+
+    void showSingleStadium();
+
 private:
 
     Ui::MainWindow *ui;
