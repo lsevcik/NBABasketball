@@ -34,6 +34,7 @@ public:
 private:
 
     QSqlDatabase m_database;
+    void seed();
 };
 
 #endif // CONTROLLER_H
