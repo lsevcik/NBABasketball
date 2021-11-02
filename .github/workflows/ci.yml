@@ -6,8 +6,8 @@ jobs:
     steps:
       - name: Update Ubuntu Linux and install requisite packages
         run: |
-            apt -y update && \
-            apt -y install \
+            sudo apt -y update && \
+            sudo apt -y install \
             qt5-default
 
       - name: Checkout git repo
