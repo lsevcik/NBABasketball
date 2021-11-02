@@ -1,0 +1,25 @@
+name: CI
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update Ubuntu Linux and install requisite packages
+        run: |
+            apt -y update && \
+            apt -y install \
+            qt5-default
+
+      - name: Checkout git repo
+        uses: actions/checkout@v2
+
+      - name: Build Qmake project
+        run: |
+            mkdir build && cd build
+            qmake -o Makefile ../*.pro
+            make
+
+      - name: Upload executable
+        uses: actions/upload-artifact@v2
+        with:
+          path: build/Lets_Play_NBA_Basketball
