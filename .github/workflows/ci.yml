@@ -3,12 +3,22 @@ on: [push, pull_request, workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: ubuntu:rolling
+      options: --privileged
+      volumes:
+        - /sys/fs/cgroup:/sys/fs/cgroup
     steps:
       - name: Update Ubuntu Linux and install requisite packages
         run: |
-            sudo apt -y update && \
-            sudo apt -y install \
-            qt5-default
+            apt -y update && \
+            DEBIAN_FRONTEND=noninteractive \
+            apt -y install \
+            qtbase5-dev \
+            qt5-qmake-bin \
+            g++ \
+            make \
+            nodejs
 
       - name: Checkout git repo
         uses: actions/checkout@v2
