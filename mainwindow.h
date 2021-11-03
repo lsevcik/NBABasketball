@@ -1,6 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QStandardItem>
+#include <QStandardItemModel>
+#include <QMainWindow>
+#include <QtDebug>
+#include <QMessageBox>
 #include "loginDialog.h"
 #include "controller.h"
 
@@ -13,10 +18,9 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(Controller *controller, QWidget *parent = nullptr);
+    MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void test();
-    void on_loginCallback(bool);
+    void loginCallback(bool);
 
 public slots:
 
@@ -29,17 +33,22 @@ private slots:
 
     void on_actionLogin_triggered();
 
-    void on_showSingleStadium_radioButton_clicked();
+    void on_showSingleStadium_checkBox_clicked();
 
     void showSingleStadium();
 
-private:
-
     void on_actionQuit_triggered();
+
+    void on_actionAbout_triggered();
+
+    void on_conferences_columnView_updatePreviewWidget(const QModelIndex &);
 
 private:
     Ui::MainWindow *ui;
-    loginDialog *m_loginDialog = nullptr;
+    loginDialog *m_loginDialog;
     Controller *m_controller;
+    void constructConferencesTab();
+    void setupAdminModels();
 };
+
 #endif // MAINWINDOW_H

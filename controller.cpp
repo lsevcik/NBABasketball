@@ -67,14 +67,14 @@ void Controller::seed()
 
     // Create tables
     qry.prepare("CREATE TABLE 'Stadiums' ("
-                "'Conference'varchar(50) NOT NULL,"
-                "'Division'varchar(50) NOT NULL,"
-                "'Team Name'varchar(50) NOT NULL,"
-                "'Location'varchar(50) NOT NULL,"
-                "'Arena Name'varchar(50) NOT NULL,"
-                "'Stadium Capacity'INTEGER NOT NULL,"
-                "'Joined League'varchar(50) NOT NULL,"
-                "'Coach'varchar(50) NOT NULL"
+                "'Conference'       varchar(50) NOT NULL,"
+                "'Division'         varchar(50) NOT NULL,"
+                "'Team Name'        varchar(50) PRIMARY KEY NOT NULL,"
+                "'Location'         varchar(50) NOT NULL,"
+                "'Arena Name'       varchar(50) NOT NULL,"
+                "'Stadium Capacity' INTEGER NOT NULL,"
+                "'Joined League'    varchar(50) NOT NULL,"
+                "'Coach'            varchar(50) NOT NULL"
                 ");");
     if (!qry.exec())
         seedStadiums = false;
@@ -82,9 +82,11 @@ void Controller::seed()
 
 
     qry.prepare("CREATE TABLE 'Souvenirs' ("
-                "'Stadium'varchar(50) NOT NULL,"
-                "'Souvenir'varchar(50) NOT NULL,"
-                "'Cost'varchar(50) NOT NULL"
+                "'Stadium'      varchar(50) NOT NULL,"
+                "'Souvenir'     varchar(50) NOT NULL,"
+                "'Cost'         varchar(50) NOT NULL,"
+                "PRIMARY KEY(Stadium, Souvenir),"
+                "FOREIGN KEY(Stadium) REFERENCES Stadiums('Arena Name') ON DELETE CASCADE"
                 ");");
     if (!qry.exec())
         seedSouvenirs = false;

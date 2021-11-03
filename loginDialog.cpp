@@ -10,11 +10,11 @@ loginDialog::loginDialog(QWidget *parent) :
 }
 
 void loginDialog::on_buttonBox_accepted() {
-    static_cast<MainWindow *>(this->parentWidget())->on_loginCallback(true);
+    static_cast<MainWindow *>(this->parentWidget())->loginCallback(true);
 }
 
 void loginDialog::on_buttonBox_rejected() {
-    static_cast<MainWindow *>(this->parentWidget())->on_loginCallback(false);
+    static_cast<MainWindow *>(this->parentWidget())->loginCallback(false);
 }
 
 loginDialog::~loginDialog()

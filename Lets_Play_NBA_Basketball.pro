@@ -14,6 +14,8 @@ SOURCES += \
     controller.cpp \
     main.cpp \
     mainwindow.cpp \
+    mainwindow_conferences.cpp \
+    mainwindow_admin.cpp \
     loginDialog.cpp
 
 HEADERS += \

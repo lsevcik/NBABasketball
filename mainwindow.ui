@@ -26,11 +26,6 @@
       <property name="currentIndex">
        <number>1</number>
       </property>
-      <widget class="QWidget" name="planTab">
-       <attribute name="title">
-        <string>Plan</string>
-       </attribute>
-      </widget>
       <widget class="QWidget" name="adminTab">
        <attribute name="title">
         <string>Admin</string>
@@ -44,15 +39,21 @@
              <widget class="QTableView" name="editStadiumData_tableView"/>
             </item>
             <item row="1" column="0">
-             <layout class="QFormLayout" name="formLayout_3">
-              <item row="0" column="0">
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <item>
                <widget class="QLabel" name="editStadiumData_label">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="text">
                  <string>Select Stadium</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="1">
+              <item>
                <widget class="QComboBox" name="editStadiumData_comboBox">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -68,14 +69,33 @@
                 </property>
                </widget>
               </item>
+              <item>
+               <spacer name="horizontalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="showSingleStadium_checkBox">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Show single stadium</string>
+                </property>
+               </widget>
+              </item>
              </layout>
-            </item>
-            <item row="2" column="0">
-             <widget class="QRadioButton" name="showSingleStadium_radioButton">
-              <property name="text">
-               <string>Show single stadium</string>
-              </property>
-             </widget>
             </item>
            </layout>
           </item>
@@ -89,6 +109,9 @@
                  <string>Conference</string>
                 </property>
                </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QComboBox" name="editConference_comboBox"/>
               </item>
               <item row="1" column="0">
                <widget class="QLabel" name="editDeivision_label">
@@ -119,9 +142,6 @@
               </item>
               <item row="3" column="1">
                <widget class="QLineEdit" name="editLocation_lineEdit"/>
-              </item>
-              <item row="0" column="1">
-               <widget class="QComboBox" name="editConference_comboBox"/>
               </item>
              </layout>
             </item>
@@ -201,6 +221,55 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="conferencesTab">
+       <attribute name="title">
+        <string>Conferences</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <widget class="QSplitter" name="splitter">
+          <property name="frameShape">
+           <enum>QFrame::Box</enum>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <widget class="QColumnView" name="conferences_columnView"/>
+          <widget class="QTableView" name="conferences_tableView">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <attribute name="horizontalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="coachesTab">
+       <attribute name="title">
+        <string>Coaches</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="arenasTab">
+       <attribute name="title">
+        <string>Arenas</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="sourvenirsTab">
+       <attribute name="title">
+        <string>Souvenirs</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="planTab">
+       <attribute name="title">
+        <string>Plan</string>
+       </attribute>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -221,7 +290,14 @@
     <addaction name="actionLogin"/>
     <addaction name="actionQuit"/>
    </widget>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>About</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuAbout"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionLogin">
@@ -244,6 +320,11 @@
    </property>
    <property name="menuRole">
     <enum>QAction::QuitRole</enum>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
    </property>
   </action>
  </widget>
