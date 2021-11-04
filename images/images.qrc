@@ -1,0 +1,9 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource>
+        <file>icon.ico</file>
+        <file>Autographed Basketball.png</file>
+        <file>Team jersey.png</file>
+        <file>Team pennant.png</file>
+        <file>Team picture.png</file>
+    </qresource>
+</RCC>

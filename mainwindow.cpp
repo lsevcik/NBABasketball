@@ -36,6 +36,7 @@ void MainWindow::refreshDataViews() {
     constructConferencesTab();
     constructCoachesTab();
     constructArenasTab();
+    constructSouvenirsTab();
 } // All of these currently leak a lot of memory...
 
 void MainWindow::loginCallback(bool succ)

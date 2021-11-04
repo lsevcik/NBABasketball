@@ -43,7 +43,11 @@ private:
     void constructConferencesTab();
     void constructCoachesTab();
     void constructArenasTab();
+    void constructSouvenirsTab();
     void setupAdminModels();
+    void on_souvenir_selectionChanged(const QItemSelection &, const QItemSelection &);
+    void updateSouvenirsLogo(QString);
+    void updateSouvenirsList(QString);
 };
 
 #endif // MAINWINDOW_H

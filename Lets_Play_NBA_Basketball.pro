@@ -19,6 +19,7 @@ SOURCES += \
     mainwindow_conferences.cpp \
     mainwindow_coaches.cpp \
     mainwindow_arenas.cpp \
+    mainwindow_souvenirs.cpp \
     loginDialog.cpp
 
 HEADERS += \
@@ -29,6 +30,8 @@ HEADERS += \
 FORMS += \
     mainwindow.ui \
     loginDialog.ui
+
+RESOURCES += images/images.qrc
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
