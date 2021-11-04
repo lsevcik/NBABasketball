@@ -38,6 +38,7 @@ private:
     loginDialog *m_loginDialog;
     Controller *m_controller;
     void constructConferencesTab();
+    void constructCoachesTab();
     void setupAdminModels();
 };
 

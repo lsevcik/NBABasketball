@@ -4,7 +4,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
 
-CONFIG+=force_debug_info
+CONFIG += debug
+CONFIG += force_debug_info
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -14,8 +15,9 @@ SOURCES += \
     controller.cpp \
     main.cpp \
     mainwindow.cpp \
-    mainwindow_conferences.cpp \
     mainwindow_admin.cpp \
+    mainwindow_conferences.cpp \
+    mainwindow_coaches.cpp \
     loginDialog.cpp
 
 HEADERS += \

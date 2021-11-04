@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     setupAdminModels();
 
     constructConferencesTab();
+    constructCoachesTab();
 }
 
 MainWindow::~MainWindow()
