@@ -39,6 +39,7 @@ private:
     Controller *m_controller;
     void constructConferencesTab();
     void constructCoachesTab();
+    void constructArenasTab();
     void setupAdminModels();
 };
 

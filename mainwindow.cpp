@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     constructConferencesTab();
     constructCoachesTab();
+    constructArenasTab();
 }
 
 MainWindow::~MainWindow()

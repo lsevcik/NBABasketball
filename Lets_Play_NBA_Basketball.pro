@@ -18,6 +18,7 @@ SOURCES += \
     mainwindow_admin.cpp \
     mainwindow_conferences.cpp \
     mainwindow_coaches.cpp \
+    mainwindow_arenas.cpp \
     loginDialog.cpp
 
 HEADERS += \
