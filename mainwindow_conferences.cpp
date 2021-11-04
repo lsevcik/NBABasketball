@@ -74,8 +74,26 @@ void MainWindow::constructConferencesTab()
 
 void MainWindow::on_conferences_columnView_updatePreviewWidget(const QModelIndex &index) {
     auto teamName = index.data().toString();
-    ui->conferences_tableView->setModel(m_controller->getStadiumsDataQueryModel(
+    auto tableView = ui->conferences_tableView;
+    auto sModel = new QStandardItemModel(this);
+    auto root = sModel->invisibleRootItem();
+    auto teamModel = m_controller->getStadiumsDataQueryModel(
         "SELECT * FROM [Stadiums] "
-        "WHERE [Team Name] = '" + teamName + "';")
-    );
+        "WHERE [Team Name] = '" + teamName + "';");
+    auto headerColumn = QList<QStandardItem *>();
+    auto valueColumn = QList<QStandardItem *>();
+
+    for (int i = 0; i < teamModel->columnCount(); ++i) {
+        auto fieldName = teamModel->record(0).fieldName(i);
+        auto fieldValue = teamModel->record(0).value(i).toString();
+        auto headerNode = new QStandardItem(fieldName);
+        auto valueNode = new QStandardItem(fieldValue);
+        headerColumn.append(headerNode);
+        valueColumn.append(valueNode);
+    }
+
+    root->appendColumn(headerColumn);
+    root->appendColumn(valueColumn);
+    tableView->setModel(sModel);
+    tableView->resizeColumnsToContents();
 }
