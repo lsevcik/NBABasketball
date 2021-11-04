@@ -67,14 +67,14 @@ void Controller::seed()
 
     // Create tables
     qry.prepare("CREATE TABLE 'Stadiums' ("
-                "'Conference'       varchar(50) NOT NULL,"
-                "'Division'         varchar(50) NOT NULL,"
-                "'Team Name'        varchar(50) PRIMARY KEY NOT NULL,"
-                "'Location'         varchar(50) NOT NULL,"
-                "'Arena Name'       varchar(50) NOT NULL,"
+                "'Conference'       TEXT NOT NULL,"
+                "'Division'         TEXT NOT NULL,"
+                "'Team Name'        TEXT PRIMARY KEY NOT NULL,"
+                "'Location'         TEXT NOT NULL,"
+                "'Arena Name'       TEXT NOT NULL,"
                 "'Stadium Capacity' INTEGER NOT NULL,"
-                "'Joined League'    varchar(50) NOT NULL,"
-                "'Coach'            varchar(50) NOT NULL"
+                "'Joined League'    TEXT NOT NULL,"
+                "'Coach'            TEXT NOT NULL"
                 ");");
     if (!qry.exec())
         seedStadiums = false;
@@ -82,9 +82,9 @@ void Controller::seed()
 
 
     qry.prepare("CREATE TABLE 'Souvenirs' ("
-                "'Stadium'      varchar(50) NOT NULL,"
-                "'Souvenir'     varchar(50) NOT NULL,"
-                "'Cost'         varchar(50) NOT NULL,"
+                "'Stadium'      TEXT NOT NULL,"
+                "'Souvenir'     TEXT NOT NULL,"
+                "'Cost'         REAL NOT NULL,"
                 "PRIMARY KEY(Stadium, Souvenir),"
                 "FOREIGN KEY(Stadium) REFERENCES Stadiums('Arena Name') ON DELETE CASCADE"
                 ");");
@@ -104,12 +104,25 @@ void Controller::seed()
 
 
     if (seedSouvenirs) {
-        for (int n = 0; n < souvenirSeedLines; ++n) {
-            qry.prepare(souvenirSeedData[n]);
-            if (!qry.exec())
-                throw std::runtime_error(qry.lastError().text().toStdString());
-            qry.clear();
+        auto stadiumsModel = getStadiumsDataQueryModel(
+            "SELECT [Arena Name] FROM [Stadiums];");
+        for (int i = 0; i < stadiumsModel->rowCount(); ++i) {
+            auto stadium = stadiumsModel->record(i).value(0).toString();
+            seedDefaultSouvenirs(stadium);
         }
     }
 }
 
+void Controller::seedDefaultSouvenirs(QString &stadium) {
+    QSqlQuery qry;
+    for (int j = 0; j < souvenirSeedLines; ++j && j++) {
+        qry.prepare("INSERT INTO [Souvenirs] VALUES ("
+        "'" + stadium + "',"
+        "'" + souvenirSeedData[j] + "',"
+        + souvenirSeedData[j+1] + ");");
+        if (!qry.exec())
+            throw std::runtime_error(qry.lastError().text().toStdString());
+        qry.clear();
+    }
+
+};

@@ -26,21 +26,11 @@ public slots:
 
 private slots:
     void on_editStadiumData_comboBox_currentTextChanged(const QString &arg1);
-
-    void on_editDataReset_pushButton_clicked();
-
-    void on_editData_pushButton_clicked();
-
+    void on_editStadiumData_resetButton_clicked();
+    void on_editStadiumData_submitButton_clicked();
     void on_actionLogin_triggered();
-
-    void on_showSingleStadium_checkBox_clicked();
-
-    void showSingleStadium();
-
     void on_actionQuit_triggered();
-
     void on_actionAbout_triggered();
-
     void on_conferences_columnView_updatePreviewWidget(const QModelIndex &);
 
 private:
