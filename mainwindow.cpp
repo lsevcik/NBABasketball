@@ -13,11 +13,8 @@ MainWindow::MainWindow(QWidget *parent)
     auto adminTabIndex = ui->tabWidget->indexOf(ui->adminTab);
     ui->tabWidget->setTabVisible(adminTabIndex, false);
 
-    setupAdminModels();
-
-    constructConferencesTab();
-    constructCoachesTab();
-    constructArenasTab();
+    setupShortcuts();
+    refreshDataViews();
 }
 
 MainWindow::~MainWindow()
@@ -26,6 +23,20 @@ MainWindow::~MainWindow()
     delete m_loginDialog;
     delete ui;
 }
+
+void MainWindow::setupShortcuts() {
+    auto refreshShortcuts = QList<QKeySequence>();
+    refreshShortcuts.append(QKeySequence::Refresh);
+    refreshShortcuts.append(QKeySequence("Ctrl+R"));
+    ui->actionRefresh->setShortcuts(refreshShortcuts);
+}
+
+void MainWindow::refreshDataViews() {
+    setupAdminModels();
+    constructConferencesTab();
+    constructCoachesTab();
+    constructArenasTab();
+} // All of these currently leak a lot of memory...
 
 void MainWindow::loginCallback(bool succ)
 {
@@ -41,12 +52,16 @@ void MainWindow::on_actionLogin_triggered()
     m_loginDialog->exec();
 }
 
-void MainWindow::on_actionAbout_triggered()
-{
-    QMessageBox::aboutQt(this, "About");
-}
-
 void MainWindow::on_actionQuit_triggered()
 {
     QApplication::quit();
+}
+
+void MainWindow::on_actionRefresh_triggered() {
+    refreshDataViews();
+}
+
+void MainWindow::on_actionAbout_triggered()
+{
+    QMessageBox::aboutQt(this, "About");
 }

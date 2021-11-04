@@ -12,7 +12,6 @@ void MainWindow::constructArenasTab() {
     auto seatingModel = m_controller->getStadiumsDataQueryModel(
         "SELECT SUM([Stadium Capacity]) "
         "FROM [Stadiums]");
-    int seatingCapacity = seatingModel->record(0).value(0).toInt();
-    qDebug() << seatingCapacity;
+    auto seatingCapacity = seatingModel->record(0).value(0).toInt();
     seatingDisplay->display(seatingCapacity);
 }

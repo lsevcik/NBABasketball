@@ -30,6 +30,7 @@ private slots:
     void on_editStadiumData_submitButton_clicked();
     void on_actionLogin_triggered();
     void on_actionQuit_triggered();
+    void on_actionRefresh_triggered();
     void on_actionAbout_triggered();
     void on_conferences_columnView_updatePreviewWidget(const QModelIndex &);
 
@@ -37,6 +38,8 @@ private:
     Ui::MainWindow *ui;
     loginDialog *m_loginDialog;
     Controller *m_controller;
+    void setupShortcuts();
+    void refreshDataViews();
     void constructConferencesTab();
     void constructCoachesTab();
     void constructArenasTab();

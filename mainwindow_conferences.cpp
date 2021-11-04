@@ -82,13 +82,18 @@ void MainWindow::on_conferences_columnView_updatePreviewWidget(const QModelIndex
         "WHERE [Team Name] = '" + teamName + "';");
     auto headerColumn = QList<QStandardItem *>();
     auto valueColumn = QList<QStandardItem *>();
+    auto boldFont = QFont();
+    boldFont.setBold(true);
 
     for (int i = 0; i < teamModel->columnCount(); ++i) {
         auto fieldName = teamModel->record(0).fieldName(i);
         auto fieldValue = teamModel->record(0).value(i).toString();
         auto headerNode = new QStandardItem(fieldName);
         auto valueNode = new QStandardItem(fieldValue);
+
+        headerNode->setFont(boldFont);
         headerColumn.append(headerNode);
+        valueNode->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
         valueColumn.append(valueNode);
     }
 
