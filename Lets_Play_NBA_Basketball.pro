@@ -12,16 +12,20 @@ CONFIG+=force_debug_info
 
 SOURCES += \
     controller.cpp \
+    controller_recursiveAlg.cpp \
     main.cpp \
     mainwindow.cpp \
     mainwindow_conferences.cpp \
     mainwindow_admin.cpp \
-    loginDialog.cpp
+    loginDialog.cpp \
+    mainwindow_plan.cpp \
+    stadium.cpp
 
 HEADERS += \
     controller.h \
     mainwindow.h \
-    loginDialog.h
+    loginDialog.h \
+    stadium.h
 
 FORMS += \
     mainwindow.ui \

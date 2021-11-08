@@ -37,6 +37,8 @@ void MainWindow::on_editStadiumData_comboBox_currentTextChanged(const QString &a
             ui->editStadiumData_editCoach_lineEdit->setText(qry.value(7).toString());
         }
     }
+
+    ui->editSouvenir_comboBox->setModel(m_controller->getStadiumsDataQueryModel("SELECT DISTINCT [Stadium] FROM [Souvenirs] ORDER BY [Stadium] ASC"));
 }
 
 void MainWindow::on_editStadiumData_resetButton_clicked()
@@ -72,3 +74,28 @@ void MainWindow::on_editStadiumData_submitButton_clicked()
         ui->editStadiumData_comboBox->setModel(m_controller->getStadiumsDataQueryModel("SELECT [Arena Name] FROM Stadiums ORDER BY [Arena Name] ASC"));
     }
 }
+
+void MainWindow::on_editSouvenir_comboBox_currentTextChanged(const QString &arg1)
+{
+
+    qDebug() << "huh";
+    QSqlQuery qry;
+    QString query, stadium, souvenir, cost;
+
+    stadium = ui->editStadiumData_comboBox->currentText();
+
+//    query = "SELECT DISTINCT [Souvenir], [Cost] FROM [Souvenirs] WHERE [Stadium] = '"+arg1+"';";
+    query = "SELECT DISTINCT [Stadium] FROM [Souvenirs] ORDER BY [Stadium] ASC";
+
+    qry.prepare(query);
+
+    if (!qry.exec())
+        qDebug() << "ERROR IN on_editSouvenir_comboBox_currentTextChanged()";
+    else {
+        qDebug() << "PAST ELSE";
+        qDebug() << qry.value(0);
+        qDebug() << qry.record();
+        qDebug() << qry.result();
+    }
+}
+

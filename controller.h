@@ -6,6 +6,8 @@
 #include <QSqlDriver>
 #include <QSqlQuery>
 #include <QSqlError>
+#include <QVector>
+#include "stadium.h"
 
 class Controller : public QObject
 {
@@ -21,11 +23,26 @@ public:
                          QString location, QString newArenaName, QString oldArenaName, int stadiumCapacity,
                          int joinedLeague, QString coach);
 
+    // FUNCTIONS AND CONTAINERS FOR RECURSIVE ALG
+    QVector<Stadium*> tripList;
+    QVector<Stadium*> completedTrip;
+
+    int getTeamCount();
+    void createRecursiveTripList();
+//    void createCustomRecursiveTripList();
+    void resetRecursiveTripLists();
+    void displayRecursiveTripList();
+    void createRecursiveTrip(QString startTeam);
+    void resetRecursiveTrip();
+    void displayRecursiveTrip();
+
 private:
 
     QSqlDatabase m_database;
     void seed();
     void seedDefaultSouvenirs(QString &);
+
+   \
 };
 
 #endif // CONTROLLER_H
