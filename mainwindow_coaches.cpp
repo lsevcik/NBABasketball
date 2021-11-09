@@ -3,9 +3,10 @@
 
 void MainWindow::constructCoachesTab() {
     auto coachesTable = ui->coaches_tableView;
-    auto model = m_controller->getStadiumsDataQueryModel(
+    QSqlQueryModel coachesModel;
+    coachesModel.setQuery(
         "SELECT [Coach], [Team Name] "
         "FROM [Stadiums] ORDER BY [Team Name] ASC");
-    coachesTable->setModel(model);
+    coachesTable->setModel(&coachesModel);
     coachesTable->resizeColumnsToContents();
 }

@@ -63,33 +63,54 @@ void Controller::seed()
 {
     QSqlQuery qry;
     bool seedStadiums = true,
-         seedSouvenirs = true;
+         seedSouvenirs = true,
+         seedDistances = true;
+
+    // Enforce foreign key checks
+    qry.prepare("PRAGMA foreign_keys = ON");
+    if (!qry.exec())
+        throw std::runtime_error(qry.lastError().text().toStdString());
+    qry.clear();
 
     // Create tables
-    qry.prepare("CREATE TABLE 'Stadiums' ("
-                "'Conference'       TEXT NOT NULL,"
-                "'Division'         TEXT NOT NULL,"
-                "'Team Name'        TEXT PRIMARY KEY NOT NULL,"
-                "'Location'         TEXT NOT NULL,"
-                "'Arena Name'       TEXT NOT NULL,"
-                "'Stadium Capacity' INTEGER NOT NULL,"
-                "'Joined League'    TEXT NOT NULL,"
-                "'Coach'            TEXT NOT NULL"
-                ");");
+    qry.prepare(
+        "CREATE TABLE \"Stadiums\" ("
+        "\"Conference\"       TEXT NOT NULL,"
+        "\"Division\"         TEXT NOT NULL,"
+        "\"Team Name\"        TEXT PRIMARY KEY NOT NULL,"
+        "\"Location\"         TEXT NOT NULL,"
+        "\"Arena Name\"       TEXT NOT NULL UNIQUE,"
+        "\"Stadium Capacity\" INTEGER NOT NULL,"
+        "\"Joined League\"    TEXT NOT NULL,"
+        "\"Coach\"            TEXT NOT NULL"
+        ");");
     if (!qry.exec())
         seedStadiums = false;
     qry.clear();
 
 
-    qry.prepare("CREATE TABLE 'Souvenirs' ("
-                "'Stadium'      TEXT NOT NULL,"
-                "'Souvenir'     TEXT NOT NULL,"
-                "'Cost'         REAL NOT NULL,"
-                "PRIMARY KEY(Stadium, Souvenir),"
-                "FOREIGN KEY(Stadium) REFERENCES Stadiums('Arena Name') ON DELETE CASCADE"
-                ");");
+    qry.prepare(
+        "CREATE TABLE \"Souvenirs\" ("
+        "\"Stadium\"      TEXT NOT NULL REFERENCES \"Stadiums\"(\"Arena Name\") ON UPDATE CASCADE ON DELETE CASCADE,"
+        "\"Souvenir\"     TEXT NOT NULL,"
+        "\"Cost\"         REAL NOT NULL,"
+        "PRIMARY KEY(\"Stadium\", \"Souvenir\")"
+        ");");
     if (!qry.exec())
         seedSouvenirs = false;
+    qry.clear();
+
+
+    qry.prepare(
+        "CREATE TABLE \"Distances\" ("
+        "\"StartTeam\"	TEXT NOT NULL REFERENCES \"Stadiums\"(\"Team Name\") ON UPDATE CASCADE ON DELETE CASCADE,"
+        "\"StartStatdium\"	TEXT NOT NULL REFERENCES \"Stadiums\"(\"Arena Name\") ON UPDATE CASCADE ON DELETE CASCADE,"
+        "\"DestinationTeam\"	TEXT NOT NULL REFERENCES \"Stadiums\"(\"Team Name\") ON UPDATE CASCADE ON DELETE CASCADE,"
+        "\"Distance\"	REAL NOT NULL,"
+        "PRIMARY KEY(\"StartTeam\", \"DestinationTeam\")"
+        ");");
+    if (!qry.exec())
+        seedDistances = false;
     qry.clear();
 
 
@@ -111,15 +132,27 @@ void Controller::seed()
             seedDefaultSouvenirs(stadium);
         }
     }
+
+
+    if (seedDistances) {
+        for (int n = 0; n < distanceSeedLines; ++n) {
+            qry.prepare(distanceSeedData[n]);
+            if (!qry.exec())
+                throw std::runtime_error(qry.lastError().text().toStdString());
+            qry.clear();
+        }
+    }
+
 }
 
 void Controller::seedDefaultSouvenirs(QString &stadium) {
     QSqlQuery qry;
     for (int j = 0; j < souvenirSeedLines; ++j && j++) {
-        qry.prepare("INSERT INTO [Souvenirs] VALUES ("
-        "'" + stadium + "',"
-        "'" + souvenirSeedData[j] + "',"
-        + souvenirSeedData[j+1] + ");");
+        qry.prepare(
+            "INSERT INTO \"Souvenirs\" VALUES ( "
+            "'" + stadium + "', "
+            "'" + souvenirSeedData[j] + "', "
+            "'" + souvenirSeedData[j+1] + "');");
         if (!qry.exec())
             throw std::runtime_error(qry.lastError().text().toStdString());
         qry.clear();

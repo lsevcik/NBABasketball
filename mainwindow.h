@@ -40,6 +40,8 @@ private:
     Ui::MainWindow *ui;
     loginDialog *m_loginDialog;
     Controller *m_controller;
+    QSqlQueryModel m_arenasModel;
+    QStandardItemModel m_souvenirsModel;
     void setupShortcuts();
     void refreshDataViews();
     void constructConferencesTab();

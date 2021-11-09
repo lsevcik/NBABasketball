@@ -26,6 +26,7 @@ SOURCES += \
     stadium.cpp
 
 HEADERS += \
+    seed.h \
     controller.h \
     mainwindow.h \
     loginDialog.h \

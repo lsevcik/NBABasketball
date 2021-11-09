@@ -71,14 +71,12 @@ void MainWindow::on_editStadiumData_submitButton_clicked()
                                       location, newArenaName, oldArenaName, stadiumCapacity,
                                       joinedLeague, coach);
 
-        ui->editStadiumData_comboBox->setModel(m_controller->getStadiumsDataQueryModel("SELECT [Arena Name] FROM Stadiums ORDER BY [Arena Name] ASC"));
+        refreshDataViews();
     }
 }
 
 void MainWindow::on_editSouvenir_comboBox_currentTextChanged(const QString &arg1)
 {
-
-    qDebug() << "huh";
     QSqlQuery qry;
     QString query, stadium, souvenir, cost;
 

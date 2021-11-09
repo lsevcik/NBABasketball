@@ -41,8 +41,6 @@ private:
     QSqlDatabase m_database;
     void seed();
     void seedDefaultSouvenirs(QString &);
-
-   \
 };
 
 #endif // CONTROLLER_H
