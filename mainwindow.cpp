@@ -66,3 +66,5 @@ void MainWindow::on_actionAbout_triggered()
 {
     QMessageBox::aboutQt(this, "About");
 }
+
+

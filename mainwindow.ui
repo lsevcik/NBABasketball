@@ -34,7 +34,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>5</number>
       </property>
       <widget class="QWidget" name="adminTab">
        <attribute name="title">
@@ -707,6 +707,95 @@
        <attribute name="title">
         <string>Plan</string>
        </attribute>
+       <widget class="QComboBox" name="selectStartTeamForRecursiveTrip_comboBox">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>241</width>
+          <height>22</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QTableView" name="selectDestinationStadiumsForRecursiveTrip_tableView">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>90</y>
+          <width>241</width>
+          <height>341</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="displayDestinationStadiumsForRecursiveTrip_textBrowser">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>470</y>
+          <width>241</width>
+          <height>291</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QTableWidget" name="displayRecursiveTrip_tableWidget">
+        <property name="geometry">
+         <rect>
+          <x>290</x>
+          <y>90</y>
+          <width>381</width>
+          <height>671</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QTableWidget" name="purchaseSouvenirsForRecursiveTrip_tableWidget">
+        <property name="geometry">
+         <rect>
+          <x>700</x>
+          <y>90</y>
+          <width>541</width>
+          <height>351</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="resetRecursiveTrip_pushButton">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>780</y>
+          <width>93</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>PushButton</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="createRecursiveTrip_pushButton">
+        <property name="geometry">
+         <rect>
+          <x>170</x>
+          <y>780</y>
+          <width>93</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>PushButton</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="createAutomaticRecursiveTrip_pushButton">
+        <property name="geometry">
+         <rect>
+          <x>300</x>
+          <y>20</y>
+          <width>101</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>PushButton</string>
+        </property>
+       </widget>
       </widget>
      </widget>
     </item>
@@ -718,7 +807,7 @@
      <x>0</x>
      <y>0</y>
      <width>1280</width>
-     <height>29</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

@@ -13,6 +13,7 @@ CONFIG += force_debug_info
 
 SOURCES += \
     controller.cpp \
+    controller_recursiveAlg.cpp \
     main.cpp \
     mainwindow.cpp \
     mainwindow_admin.cpp \
@@ -20,12 +21,15 @@ SOURCES += \
     mainwindow_coaches.cpp \
     mainwindow_arenas.cpp \
     mainwindow_souvenirs.cpp \
-    loginDialog.cpp
+    loginDialog.cpp \
+    mainwindow_plan.cpp \
+    stadium.cpp
 
 HEADERS += \
     controller.h \
     mainwindow.h \
-    loginDialog.h
+    loginDialog.h \
+    stadium.h
 
 FORMS += \
     mainwindow.ui \

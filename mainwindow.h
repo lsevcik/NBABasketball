@@ -34,6 +34,8 @@ private slots:
     void on_actionAbout_triggered();
     void on_conferences_columnView_updatePreviewWidget(const QModelIndex &);
 
+    void on_editSouvenir_comboBox_currentTextChanged(const QString &arg1);
+
 private:
     Ui::MainWindow *ui;
     loginDialog *m_loginDialog;
