@@ -3,8 +3,15 @@
 
 void MainWindow::setupAdminModels()
 {
-    ui->editStadiumData_editConference_comboBox->setModel(m_controller->getStadiumsDataQueryModel("SELECT DISTINCT [Conference] FROM Stadiums"));
-    ui->editStadiumData_comboBox->setModel(m_controller->getStadiumsDataQueryModel("SELECT [Arena Name] FROM Stadiums ORDER BY [Arena Name] ASC"));
+    m_adminConferenceModel.setQuery("SELECT DISTINCT [Conference] FROM Stadiums");
+    m_adminStadiumsModel.setQuery("SELECT [Arena Name] FROM Stadiums ORDER BY [Arena Name] ASC");
+    ui->editStadiumData_editConference_comboBox->setModel(&m_adminConferenceModel);
+    ui->editStadiumData_comboBox->setModel(&m_adminStadiumsModel);
+    m_adminSouvenirsModel.clear();
+    ui->editSouvenir_comboBox->setModel(&m_adminSouvenirsModel);
+    m_adminSouvenirsModel.setQuery(
+        "SELECT [Souvenir] FROM [Souvenirs] WHERE [Stadium]='"
+        + ui->editStadiumData_comboBox->currentText() + "'");
 }
 
 void MainWindow::on_editStadiumData_comboBox_currentTextChanged(const QString &arg1)
@@ -17,28 +24,26 @@ void MainWindow::on_editStadiumData_comboBox_currentTextChanged(const QString &a
     qry.prepare(query);
 
     if (!qry.exec())
-        qDebug() << "ERROR IN test()";
+        throw std::runtime_error(qry.lastError().text().toStdString());
 
-    else {
 
-        if (qry.first()) {
+    if (qry.first()) {
 
-            if (qry.value(0).toString() == "Eastern")
-                ui->editStadiumData_editConference_comboBox->setCurrentIndex(0);
-            else
-                ui->editStadiumData_editConference_comboBox->setCurrentIndex(1);
+        if (qry.value(0).toString() == "Eastern")
+            ui->editStadiumData_editConference_comboBox->setCurrentIndex(0);
+        else
+            ui->editStadiumData_editConference_comboBox->setCurrentIndex(1);
 
-            ui->editStadiumData_editDivision_lineEdit->setText(qry.value(1).toString());
-            ui->editStadiumData_editTeamName_lineEdit->setText(qry.value(2).toString());
-            ui->editStadiumData_editLocation_lineEdit->setText(qry.value(3).toString());
-            ui->editStadiumData_editArenaName_lineEdit->setText(qry.value(4).toString());
-            ui->editStadiumData_editStadiumCapacity_spinBox->setValue(qry.value(5).toInt());
-            ui->editStadiumData_editJoinedLeague_spinBox->setValue(qry.value(6).toInt());
-            ui->editStadiumData_editCoach_lineEdit->setText(qry.value(7).toString());
-        }
+        ui->editStadiumData_editDivision_lineEdit->setText(qry.value(1).toString());
+        ui->editStadiumData_editTeamName_lineEdit->setText(qry.value(2).toString());
+        ui->editStadiumData_editLocation_lineEdit->setText(qry.value(3).toString());
+        ui->editStadiumData_editArenaName_lineEdit->setText(qry.value(4).toString());
+        ui->editStadiumData_editStadiumCapacity_spinBox->setValue(qry.value(5).toInt());
+        ui->editStadiumData_editJoinedLeague_spinBox->setValue(qry.value(6).toInt());
+        ui->editStadiumData_editCoach_lineEdit->setText(qry.value(7).toString());
+        m_adminSouvenirsModel.setQuery("SELECT [Souvenir] FROM [Souvenirs] WHERE [Stadium]='" + arg1 +"'");
     }
 
-    ui->editSouvenir_comboBox->setModel(m_controller->getStadiumsDataQueryModel("SELECT DISTINCT [Stadium] FROM [Souvenirs] ORDER BY [Stadium] ASC"));
 }
 
 void MainWindow::on_editStadiumData_resetButton_clicked()
@@ -78,22 +83,68 @@ void MainWindow::on_editStadiumData_submitButton_clicked()
 void MainWindow::on_editSouvenir_comboBox_currentTextChanged(const QString &arg1)
 {
     QSqlQuery qry;
-    QString query, stadium, souvenir, cost;
+    QString query, stadium, souvenir;
 
     stadium = ui->editStadiumData_comboBox->currentText();
 
-//    query = "SELECT DISTINCT [Souvenir], [Cost] FROM [Souvenirs] WHERE [Stadium] = '"+arg1+"';";
-    query = "SELECT DISTINCT [Stadium] FROM [Souvenirs] ORDER BY [Stadium] ASC";
+    query = "SELECT [Cost] FROM [Souvenirs] WHERE "
+    " [Stadium]='"+stadium+"' AND [Souvenir] = '"+arg1+"';";
 
     qry.prepare(query);
 
     if (!qry.exec())
-        qDebug() << "ERROR IN on_editSouvenir_comboBox_currentTextChanged()";
-    else {
-        qDebug() << "PAST ELSE";
-        qDebug() << qry.value(0);
-        qDebug() << qry.record();
-        qDebug() << qry.result();
-    }
+        throw std::runtime_error(qry.lastError().text().toStdString());
+    qry.first();
+    ui->editSouvenir_doubleSpinBox->setValue(qry.record().value(0).toDouble());
+
 }
 
+void MainWindow::on_editSouvenir_submitButton_clicked() {
+    QSqlQuery qry;
+
+    QString cost = QString::number(ui->editSouvenir_doubleSpinBox->value());
+
+    qry.prepare(
+    "UPDATE [Souvenirs] SET [Cost] = '" + cost + "' WHERE "
+    " [Souvenir] = '" + ui->editSouvenir_comboBox->currentText() + "' AND "
+    " [Stadium] = '" + ui->editStadiumData_comboBox->currentText() + "';");
+    if (!qry.exec())
+        throw std::runtime_error(qry.lastError().text().toStdString());
+    refreshDataViews();
+}
+
+void MainWindow::on_editSouvenir_deleteButton_clicked() {
+
+    QMessageBox::StandardButton reply =
+    QMessageBox::question(this, "Edit", "Are you sure you want to delete the souvenir?",
+                          QMessageBox::Yes | QMessageBox::No);
+
+    if (reply == QMessageBox::No)
+        return;
+
+    QSqlQuery qry;
+    qry.prepare(
+        "DELETE FROM [Souvenirs] WHERE "
+        " [Souvenir] = '" + ui->editSouvenir_comboBox->currentText() + "' AND "
+        " [Stadium] = '" + ui->editStadiumData_comboBox->currentText() + "';");
+    if (!qry.exec())
+        throw std::runtime_error(qry.lastError().text().toStdString());
+    refreshDataViews();
+}
+
+void MainWindow::on_addSouvenir_pushButton_clicked() {
+    QSqlQuery qry;
+    QString stadium = ui->editStadiumData_comboBox->currentText();
+    QString souvenir = ui->addSouvenir_lineEdit->text();
+    QString cost = QString::number(ui->addSouvenir_doubleSpinBox->value());
+
+    qry.prepare(
+        "INSERT INTO \"Souvenirs\" VALUES ( "
+        "'" + stadium + "', "
+        "'" + souvenir + "', "
+        "'" + cost + "');");
+
+    if (!qry.exec())
+        throw std::runtime_error(qry.lastError().text().toStdString());
+    refreshDataViews();
+}

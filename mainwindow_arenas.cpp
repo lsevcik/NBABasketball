@@ -5,9 +5,11 @@ void MainWindow::constructArenasTab() {
     auto arenasTable = ui->arenas_tableView;
     auto seatingDisplay = ui->arenas_seating_lcdNumber;
     m_arenasModel.setQuery(
-        "SELECT [Arena Name], [Team Name], [Stadium Capacity] "
-        "FROM [Stadiums] ORDER BY [Stadium Capacity] ASC");
-    arenasTable->setModel(&m_arenasModel);
+        "SELECT [Arena Name], [Team Name], [Stadium Capacity], [Joined League] "
+        "FROM [Stadiums] ORDER BY [Arena Name] ASC");
+    m_arenasSortedModel.setSourceModel(&m_arenasModel);
+    arenasTable->setModel(&m_arenasSortedModel);
+
     arenasTable->resizeColumnsToContents();
     QSqlQueryModel seatingModel;
     seatingModel.setQuery(

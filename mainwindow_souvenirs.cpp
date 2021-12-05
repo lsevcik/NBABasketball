@@ -3,22 +3,17 @@
 
 void MainWindow::constructSouvenirsTab() {
     auto teamsList = ui->souvenirs_team_listView;
-    auto teamsModel = m_controller->getStadiumsDataQueryModel(
+    m_souvenirsTeamsModel.setQuery(
         "SELECT [Team Name] FROM [Stadiums] "
         "ORDER BY [Team Name] ASC;");
-    teamsList->setModel(teamsModel);
+    teamsList->setModel(&m_souvenirsTeamsModel);
     auto selectionModel = teamsList->selectionModel();
     connect(selectionModel, &QItemSelectionModel::selectionChanged, this, &MainWindow::on_souvenir_selectionChanged);
 }
 
 void MainWindow::on_souvenir_selectionChanged(const QItemSelection &current, const QItemSelection &) {
     auto teamName = current.indexes()[0].data().toString();
-    updateSouvenirsLogo(teamName);
     updateSouvenirsList(teamName);
-}
-
-void MainWindow::updateSouvenirsLogo(QString) {
-
 }
 
 void MainWindow::updateSouvenirsList(QString teamName) {

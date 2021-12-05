@@ -7,6 +7,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
     ,  m_loginDialog(new loginDialog(this))
     ,  m_controller(new Controller)
+    , m_conferencesStandardModel(this)
+    , m_conferencesPreviewModel(this)
 {
     ui->setupUi(this);
 

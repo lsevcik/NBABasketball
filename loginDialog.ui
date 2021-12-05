@@ -16,11 +16,17 @@
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="0">
     <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="focusPolicy">
+      <enum>Qt::TabFocus</enum>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+     <property name="centerButtons">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -57,7 +63,11 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="login_password_lineEdit"/>
+      <widget class="QLineEdit" name="login_password_lineEdit">
+       <property name="echoMode">
+        <enum>QLineEdit::Password</enum>
+       </property>
+      </widget>
      </item>
      <item row="3" column="1">
       <spacer name="verticalSpacer_2">
@@ -76,6 +86,10 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>login_username_lineEdit</tabstop>
+  <tabstop>login_password_lineEdit</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
@@ -85,8 +99,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>240</x>
+     <y>140</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -101,8 +115,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>240</x>
+     <y>140</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>

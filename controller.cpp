@@ -125,10 +125,11 @@ void Controller::seed()
 
 
     if (seedSouvenirs) {
-        auto stadiumsModel = getStadiumsDataQueryModel(
+        QSqlQueryModel stadiumsModel;
+        stadiumsModel.setQuery(
             "SELECT [Arena Name] FROM [Stadiums];");
-        for (int i = 0; i < stadiumsModel->rowCount(); ++i) {
-            auto stadium = stadiumsModel->record(i).value(0).toString();
+        for (int i = 0; i < stadiumsModel.rowCount(); ++i) {
+            auto stadium = stadiumsModel.record(i).value(0).toString();
             seedDefaultSouvenirs(stadium);
         }
     }

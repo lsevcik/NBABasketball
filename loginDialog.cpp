@@ -7,6 +7,7 @@ loginDialog::loginDialog(QWidget *parent) :
         ui(new Ui::loginDialog)
 {
     ui->setupUi(this);
+    ui->login_username_lineEdit->setFocus();
 }
 
 void loginDialog::on_buttonBox_accepted() {

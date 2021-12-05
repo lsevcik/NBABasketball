@@ -28,6 +28,9 @@ private slots:
     void on_editStadiumData_comboBox_currentTextChanged(const QString &arg1);
     void on_editStadiumData_resetButton_clicked();
     void on_editStadiumData_submitButton_clicked();
+    void on_editSouvenir_submitButton_clicked();
+    void on_editSouvenir_deleteButton_clicked();
+    void on_addSouvenir_pushButton_clicked();
     void on_actionLogin_triggered();
     void on_actionQuit_triggered();
     void on_actionRefresh_triggered();
@@ -41,7 +44,15 @@ private:
     loginDialog *m_loginDialog;
     Controller *m_controller;
     QSqlQueryModel m_arenasModel;
+    QSortFilterProxyModel m_arenasSortedModel;
     QStandardItemModel m_souvenirsModel;
+    QSqlQueryModel m_coachesModel;
+    QSqlQueryModel m_adminConferenceModel;
+    QSqlQueryModel m_adminStadiumsModel;
+    QSqlQueryModel m_adminSouvenirsModel;
+    QSqlQueryModel m_souvenirsTeamsModel;
+    QStandardItemModel m_conferencesStandardModel;
+    QStandardItemModel m_conferencesPreviewModel;
     void setupShortcuts();
     void refreshDataViews();
     void constructConferencesTab();

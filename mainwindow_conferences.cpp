@@ -4,7 +4,8 @@
 void MainWindow::constructConferencesTab()
 {
     auto colView = ui->conferences_columnView;
-    auto sModel = new QStandardItemModel(this);
+    auto sModel = &m_conferencesStandardModel;
+    sModel->clear();
     auto root = sModel->invisibleRootItem();
     auto flags = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
     auto conferencesModel = m_controller->getStadiumsDataQueryModel(
@@ -75,9 +76,11 @@ void MainWindow::constructConferencesTab()
 void MainWindow::on_conferences_columnView_updatePreviewWidget(const QModelIndex &index) {
     auto teamName = index.data().toString();
     auto tableView = ui->conferences_tableView;
-    auto sModel = new QStandardItemModel(this);
+    auto sModel = &m_conferencesPreviewModel;
+    sModel->clear();
     auto root = sModel->invisibleRootItem();
-    auto teamModel = m_controller->getStadiumsDataQueryModel(
+    QSqlQueryModel teamModel;
+    teamModel.setQuery(
         "SELECT * FROM [Stadiums] "
         "WHERE [Team Name] = '" + teamName + "';");
     auto headerColumn = QList<QStandardItem *>();
@@ -85,9 +88,9 @@ void MainWindow::on_conferences_columnView_updatePreviewWidget(const QModelIndex
     auto boldFont = QFont();
     boldFont.setBold(true);
 
-    for (int i = 0; i < teamModel->columnCount(); ++i) {
-        auto fieldName = teamModel->record(0).fieldName(i);
-        auto fieldValue = teamModel->record(0).value(i).toString();
+    for (int i = 0; i < teamModel.columnCount(); ++i) {
+        auto fieldName = teamModel.record(0).fieldName(i);
+        auto fieldValue = teamModel.record(0).value(i).toString();
         auto headerNode = new QStandardItem(fieldName);
         auto valueNode = new QStandardItem(fieldValue);
 
