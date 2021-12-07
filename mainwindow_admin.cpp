@@ -144,6 +144,8 @@ void MainWindow::on_addSouvenir_pushButton_clicked() {
         "'" + souvenir + "', "
         "'" + cost + "');");
 
+    //CHECK FOR DUPLICATE KEY
+
     if (!qry.exec())
         throw std::runtime_error(qry.lastError().text().toStdString());
     refreshDataViews();

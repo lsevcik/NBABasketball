@@ -93,7 +93,7 @@ void Controller::seed()
     qry.prepare(
         "CREATE TABLE \"Distances\" ("
         "\"StartTeam\"	TEXT NOT NULL REFERENCES \"Stadiums\"(\"Team Name\") ON UPDATE CASCADE ON DELETE CASCADE,"
-        "\"StartStatdium\"	TEXT NOT NULL REFERENCES \"Stadiums\"(\"Arena Name\") ON UPDATE CASCADE ON DELETE CASCADE,"
+        "\"StartStadium\"	TEXT NOT NULL REFERENCES \"Stadiums\"(\"Arena Name\") ON UPDATE CASCADE ON DELETE CASCADE,"
         "\"DestinationTeam\"	TEXT NOT NULL REFERENCES \"Stadiums\"(\"Team Name\") ON UPDATE CASCADE ON DELETE CASCADE,"
         "\"Distance\"	REAL NOT NULL,"
         "PRIMARY KEY(\"StartTeam\", \"DestinationTeam\")"

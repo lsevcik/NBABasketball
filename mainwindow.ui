@@ -34,7 +34,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="adminTab">
        <attribute name="title">
@@ -713,95 +713,119 @@
        <attribute name="title">
         <string>Plan</string>
        </attribute>
-       <widget class="QComboBox" name="selectStartTeamForRecursiveTrip_comboBox">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>20</y>
-          <width>241</width>
-          <height>22</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QTableView" name="selectDestinationStadiumsForRecursiveTrip_tableView">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>90</y>
-          <width>241</width>
-          <height>341</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QTextBrowser" name="displayDestinationStadiumsForRecursiveTrip_textBrowser">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>470</y>
-          <width>241</width>
-          <height>291</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QTableWidget" name="displayRecursiveTrip_tableWidget">
-        <property name="geometry">
-         <rect>
-          <x>290</x>
-          <y>90</y>
-          <width>381</width>
-          <height>671</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QTableWidget" name="purchaseSouvenirsForRecursiveTrip_tableWidget">
-        <property name="geometry">
-         <rect>
-          <x>700</x>
-          <y>90</y>
-          <width>541</width>
-          <height>351</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="resetRecursiveTrip_pushButton">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>780</y>
-          <width>93</width>
-          <height>28</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>PushButton</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="createRecursiveTrip_pushButton">
-        <property name="geometry">
-         <rect>
-          <x>170</x>
-          <y>780</y>
-          <width>93</width>
-          <height>28</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>PushButton</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="createAutomaticRecursiveTrip_pushButton">
-        <property name="geometry">
-         <rect>
-          <x>300</x>
-          <y>20</y>
-          <width>101</width>
-          <height>28</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>PushButton</string>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_7">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QComboBox" name="comboBox">
+            <item>
+             <property name="text">
+              <string>Manual</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>DFS</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>BFS</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Dijkstra</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="selectStartTeamForRecursiveTrip_comboBox">
+            <item>
+             <property name="text">
+              <string>Starting City</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBox_2">
+            <item>
+             <property name="text">
+              <string>Destination City</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_3">
+            <property name="text">
+             <string>Purchase Souvenirs</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QFrame" name="frame_4">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_8">
+             <item>
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>Current Cities</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QListView" name="listView_2"/>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item>
+              <widget class="QPushButton" name="pushButton">
+               <property name="text">
+                <string>&lt;&lt;</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_2">
+               <property name="text">
+                <string>&gt;&gt;</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_9">
+             <item>
+              <widget class="QLabel" name="label_3">
+               <property name="text">
+                <string>Available Cities</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QListView" name="listView"/>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
