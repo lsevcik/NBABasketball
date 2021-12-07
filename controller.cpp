@@ -15,17 +15,6 @@ Controller::Controller(QObject * parent) : QObject(parent)
     seed();
 }
 
-QSqlQueryModel* Controller::getStadiumsDataQueryModel(QString query)
-{
-    QSqlQueryModel* model = new QSqlQueryModel();
-    model->setQuery(query);
-
-    if (model->lastError().isValid())
-        qDebug() << model->lastError();
-
-    return model;
-}
-
 void Controller::editStadiumData(QString conference, QString division, QString teamName,
                      QString location, QString newArenaName, QString oldArenaName, int stadiumCapacity,
                      int joinedLeague, QString coach)
@@ -146,7 +135,7 @@ void Controller::seed()
 
 }
 
-void Controller::seedDefaultSouvenirs(QString &stadium) {
+void Controller::seedDefaultSouvenirs(const QString &stadium) {
     QSqlQuery qry;
     for (int j = 0; j < souvenirSeedLines; ++j && j++) {
         qry.prepare(

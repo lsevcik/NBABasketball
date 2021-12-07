@@ -17,8 +17,6 @@ public:
 
     explicit Controller(QObject *parent = nullptr);
 
-    QSqlQueryModel *getStadiumsDataQueryModel(QString query);
-
     void editStadiumData(QString conference, QString division, QString teamName,
                          QString location, QString newArenaName, QString oldArenaName, int stadiumCapacity,
                          int joinedLeague, QString coach);
@@ -40,7 +38,7 @@ private:
 
     QSqlDatabase m_database;
     void seed();
-    void seedDefaultSouvenirs(QString &);
+    void seedDefaultSouvenirs(const QString &);
 };
 
 #endif // CONTROLLER_H
