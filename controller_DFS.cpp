@@ -42,8 +42,7 @@ void Controller::populateListOfTeams() {
 
     QSqlQueryModel model;
     model.setQuery("SELECT DISTINCT [StartTeam] FROM [Distances] "
-                   "WHERE [Enabled]=1 "
-                   "ORDER BY [StartTeam] ASC");
+                   "WHERE [Enabled]=1 ORDER BY [StartTeam] ASC");
 
     for (int i = 0; i < model.rowCount(); i++) {
 
@@ -52,6 +51,7 @@ void Controller::populateListOfTeams() {
         adjList[i].append(QVector<Edge>());
     }
 
+    qDebug() << listOfTeams.size() << " " << adjList.size();
 
     model.clear();
     model.setQuery("SELECT * FROM [Distances] "
