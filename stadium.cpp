@@ -37,7 +37,7 @@ void Stadium::setDestinationTeam(const QString &item)
     destinationTeam = item;
 }
 
-void Stadium::setDistance(int temp)
+void Stadium::setDistance(float temp)
 {
     distance = temp;
 }

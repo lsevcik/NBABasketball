@@ -13,6 +13,7 @@ Controller::Controller(QObject * parent) : QObject(parent)
     }
 
     seed();
+    populateListOfTeams();
 }
 
 void Controller::editStadiumData(QString conference, QString division, QString teamName,

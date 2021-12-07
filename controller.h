@@ -7,6 +7,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QVector>
+#include <QMap>
 #include "stadium.h"
 
 class Controller : public QObject
@@ -14,6 +15,8 @@ class Controller : public QObject
     Q_OBJECT
 
 public:
+
+
 
     explicit Controller(QObject *parent = nullptr);
 
@@ -34,11 +37,34 @@ public:
     void resetRecursiveTrip();
     void displayRecursiveTrip();
 
+    // FUNCTIONS AND CONTAINERS FOR DFS
+
+    struct Edge
+    {
+        int destinationTeam;
+        float distance;
+    };
+
+    QMap<int, bool> visited;
+    QMap<int, QVector<Edge>> adjList;
+    QVector<QString> completedDFS;
+    QVector<QString> listOfTeams;
+
+    void populateListOfTeams();
+    void DFS(int startTeam);
+    void addDistance(float distance);
+    int findIndex(QString teamToFind);
+
+
+    float DFS_Distance = 0;
+
 private:
 
     QSqlDatabase m_database;
     void seed();
     void seedDefaultSouvenirs(const QString &);
 };
+
+
 
 #endif // CONTROLLER_H
