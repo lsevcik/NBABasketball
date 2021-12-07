@@ -23,7 +23,8 @@ SOURCES += \
     loginDialog.cpp \
     mainwindow_plan.cpp \
     stadium.cpp \
-    importDialog.cpp
+    importDialog.cpp \
+    purchaseDialog.cpp
 
 HEADERS += \
     seed.h \
@@ -31,12 +32,14 @@ HEADERS += \
     mainwindow.h \
     loginDialog.h \
     stadium.h \
-    importDialog.h
+    importDialog.h \
+    purchaseDialog.h
 
 FORMS += \
     mainwindow.ui \
     loginDialog.ui \
-    importDialog.ui
+    importDialog.ui \
+    purchaseDialog.ui
 
 RESOURCES += images/images.qrc
 

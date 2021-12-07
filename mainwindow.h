@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include "loginDialog.h"
 #include "importDialog.h"
+#include "purchaseDialog.h"
 #include "controller.h"
 
 QT_BEGIN_NAMESPACE
@@ -22,6 +23,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void loginCallback(bool);
+    void purchaseCallback(double);
 
 public slots:
 
@@ -39,11 +41,13 @@ private slots:
     void on_conferences_columnView_updatePreviewWidget(const QModelIndex &);
     void on_admin_importButton_clicked();
     void on_editSouvenir_comboBox_currentTextChanged(const QString &arg1);
+    void on_plan_purchaseButton_clicked();
 
 private:
     Ui::MainWindow *ui;
     loginDialog *m_loginDialog;
     importDialog *m_importDialog;
+    purchaseDialog *m_purchaseDialog;
     Controller *m_controller;
     QSqlQueryModel m_arenasModel;
     QSortFilterProxyModel m_arenasSortedModel;

@@ -24,7 +24,6 @@ private slots:
 private:
     Ui::importDialog *ui;
     QSqlQueryModel model;
-    QSqlDatabase db;
 };
 
 #endif // IMPORTDIALOG_H

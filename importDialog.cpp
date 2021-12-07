@@ -5,8 +5,7 @@
 
 importDialog::importDialog(QWidget *parent) :
 QDialog(parent),
-ui(new Ui::importDialog),
-db(QSqlDatabase::database())
+ui(new Ui::importDialog)
 {
     ui->setupUi(this);
     ui->comboBox->setModel(&model);
