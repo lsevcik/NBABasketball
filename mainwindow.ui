@@ -687,11 +687,6 @@
            <widget class="QComboBox" name="comboBox">
             <item>
              <property name="text">
-              <string>Manual</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
               <string>DFS</string>
              </property>
             </item>
@@ -702,25 +697,21 @@
             </item>
             <item>
              <property name="text">
+              <string>MST</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
               <string>Dijkstra</string>
              </property>
             </item>
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="selectStartTeamForRecursiveTrip_comboBox">
+           <widget class="QComboBox" name="plan_startingComboBox">
             <item>
              <property name="text">
               <string>Starting City</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="comboBox_2">
-            <item>
-             <property name="text">
-              <string>Destination City</string>
              </property>
             </item>
            </widget>
