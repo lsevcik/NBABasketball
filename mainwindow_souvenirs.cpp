@@ -5,7 +5,7 @@ void MainWindow::constructSouvenirsTab() {
     auto teamsList = ui->souvenirs_team_listView;
     m_souvenirsTeamsModel.setQuery(
         "SELECT [Team Name] FROM [Stadiums] "
-        "ORDER BY [Team Name] ASC;");
+        "WHERE [Enabled]=1 ORDER BY [Team Name] ASC;");
     teamsList->setModel(&m_souvenirsTeamsModel);
     auto selectionModel = teamsList->selectionModel();
     connect(selectionModel, &QItemSelectionModel::selectionChanged, this, &MainWindow::on_souvenir_selectionChanged);

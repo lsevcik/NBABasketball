@@ -3,8 +3,11 @@
 
 void MainWindow::setupAdminModels()
 {
-    m_adminConferenceModel.setQuery("SELECT DISTINCT [Conference] FROM Stadiums");
-    m_adminStadiumsModel.setQuery("SELECT [Arena Name] FROM Stadiums ORDER BY [Arena Name] ASC");
+    m_adminConferenceModel.setQuery(
+        "SELECT DISTINCT [Conference] FROM Stadiums WHERE [Enabled]=1;");
+    m_adminStadiumsModel.setQuery(
+        "SELECT [Arena Name] FROM Stadiums "
+        "WHERE [Enabled]=1 ORDER BY [Arena Name] ASC");
     ui->editStadiumData_editConference_comboBox->setModel(&m_adminConferenceModel);
     ui->editStadiumData_comboBox->setModel(&m_adminStadiumsModel);
     m_adminSouvenirsModel.clear();
@@ -149,4 +152,8 @@ void MainWindow::on_addSouvenir_pushButton_clicked() {
     if (!qry.exec())
         throw std::runtime_error(qry.lastError().text().toStdString());
     refreshDataViews();
+}
+
+void MainWindow::on_admin_importButton_clicked() {
+    m_importDialog->exec();
 }

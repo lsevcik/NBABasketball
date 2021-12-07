@@ -71,7 +71,8 @@ void Controller::seed()
         "\"Arena Name\"       TEXT NOT NULL UNIQUE,"
         "\"Stadium Capacity\" INTEGER NOT NULL,"
         "\"Joined League\"    TEXT NOT NULL,"
-        "\"Coach\"            TEXT NOT NULL"
+        "\"Coach\"            TEXT NOT NULL,"
+        "\"Enabled\"          INTEGER NOT NULL DEFAULT 1"
         ");");
     if (!qry.exec())
         seedStadiums = false;
@@ -104,8 +105,8 @@ void Controller::seed()
 
 
     if (seedStadiums) {
-        for (int n = 0; n < stadiumSeedLines; ++n) {
-            qry.prepare(stadiumSeedData[n]);
+        for (const auto &lineOfSql : stadiumSeedData) {
+            qry.prepare(lineOfSql);
             if (!qry.exec())
                 throw std::runtime_error(qry.lastError().text().toStdString());
             qry.clear();
@@ -125,8 +126,8 @@ void Controller::seed()
 
 
     if (seedDistances) {
-        for (int n = 0; n < distanceSeedLines; ++n) {
-            qry.prepare(distanceSeedData[n]);
+        for (const auto &lineOfSql : distanceSeedData) {
+            qry.prepare(lineOfSql);
             if (!qry.exec())
                 throw std::runtime_error(qry.lastError().text().toStdString());
             qry.clear();

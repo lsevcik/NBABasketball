@@ -4,7 +4,7 @@ int Controller::getTeamCount() {
 
     QSqlQuery qry;
 
-    qry.prepare("SELECT COUNT(DISTINCT [StartTeam]) FROM [Distances]");
+    qry.prepare("SELECT COUNT(DISTINCT [StartTeam]) FROM [Distances] WHERE [Enabled]=1;");
 
     if (!qry.exec()) {
 

@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     ,  m_loginDialog(new loginDialog(this))
+    ,  m_importDialog(new importDialog(this))
     ,  m_controller(new Controller)
     , m_conferencesStandardModel(this)
     , m_conferencesPreviewModel(this)
@@ -36,7 +37,6 @@ void MainWindow::setupShortcuts() {
 void MainWindow::refreshDataViews() {
     setupAdminModels();
     constructConferencesTab();
-    constructCoachesTab();
     constructArenasTab();
     constructSouvenirsTab();
 } // All of these currently leak a lot of memory...

@@ -7,6 +7,7 @@
 #include <QtDebug>
 #include <QMessageBox>
 #include "loginDialog.h"
+#include "importDialog.h"
 #include "controller.h"
 
 QT_BEGIN_NAMESPACE
@@ -36,12 +37,13 @@ private slots:
     void on_actionRefresh_triggered();
     void on_actionAbout_triggered();
     void on_conferences_columnView_updatePreviewWidget(const QModelIndex &);
-
+    void on_admin_importButton_clicked();
     void on_editSouvenir_comboBox_currentTextChanged(const QString &arg1);
 
 private:
     Ui::MainWindow *ui;
     loginDialog *m_loginDialog;
+    importDialog *m_importDialog;
     Controller *m_controller;
     QSqlQueryModel m_arenasModel;
     QSortFilterProxyModel m_arenasSortedModel;
@@ -56,7 +58,6 @@ private:
     void setupShortcuts();
     void refreshDataViews();
     void constructConferencesTab();
-    void constructCoachesTab();
     void constructArenasTab();
     void constructSouvenirsTab();
     void setupAdminModels();

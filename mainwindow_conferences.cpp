@@ -10,7 +10,7 @@ void MainWindow::constructConferencesTab()
     auto flags = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
     QSqlQueryModel conferencesModel;
     conferencesModel.setQuery(
-        "SELECT DISTINCT [Conference] FROM [Stadiums];");
+        "SELECT DISTINCT [Conference] FROM [Stadiums] WHERE [Enabled]=1;");
 
     /* Add the "Any" item */
     auto conference = "Any";
@@ -23,7 +23,7 @@ void MainWindow::constructConferencesTab()
     conferenceNode->appendRow(divisionNode);
     QSqlQueryModel teamsModel;
     teamsModel.setQuery(
-        "SELECT [Team Name] FROM [Stadiums];");
+        "SELECT [Team Name] FROM [Stadiums] WHERE [Enabled]=1;");
     for (int i = 0; i < teamsModel.rowCount(); ++i) {
         auto teamName = teamsModel.record(i).value(0).toString();
         auto teamNameNode = new QStandardItem(teamName);
@@ -38,7 +38,8 @@ void MainWindow::constructConferencesTab()
         root->appendRow(conferenceNode);
         QSqlQueryModel divisionsModel;
         divisionsModel.setQuery(
-            "SELECT DISTINCT [Division] FROM [Stadiums] WHERE [Conference] = '"+ conference +"';");
+            "SELECT DISTINCT [Division] FROM [Stadiums] WHERE "
+            "[Conference] = '"+ conference +"' AND [Enabled]=1;");
 
         /* Add the "Any item" */
         auto division = "Any";
@@ -48,7 +49,7 @@ void MainWindow::constructConferencesTab()
         QSqlQueryModel teamsModel;
         teamsModel.setQuery(
             "SELECT [Team Name] FROM [Stadiums] WHERE "
-            "[Conference] = '" + conference + "';");
+            "[Conference] = '" + conference + "' AND [Enabled]=1;");
         for (int i = 0; i < teamsModel.rowCount(); ++i) {
             auto teamName = teamsModel.record(i).value(0).toString();
             auto teamNameNode = new QStandardItem(teamName);
@@ -65,7 +66,7 @@ void MainWindow::constructConferencesTab()
             teamsModel.setQuery(
                 "SELECT [Team Name] FROM [Stadiums] WHERE "
                 "[Conference] = '" + conference + "' AND "
-                "[Division] = '" + division + "';");
+                "[Division] = '" + division + "' AND [Enabled]=1;");
             for (int i = 0; i < teamsModel.rowCount(); ++i) {
                 auto teamName = teamsModel.record(i).value(0).toString();
                 auto teamNameNode = new QStandardItem(teamName);

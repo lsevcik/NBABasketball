@@ -34,7 +34,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="adminTab">
        <attribute name="title">
@@ -86,16 +86,9 @@
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="editStadiumData_resetButton">
+           <widget class="QPushButton" name="admin_importButton">
             <property name="text">
-             <string>Reset</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="editStadiumData_submitButton">
-            <property name="text">
-             <string>Submit</string>
+             <string>Import</string>
             </property>
            </widget>
           </item>
@@ -225,6 +218,20 @@
                </item>
                <item row="3" column="1">
                 <widget class="QLineEdit" name="editStadiumData_editCoach_lineEdit"/>
+               </item>
+               <item row="5" column="1">
+                <widget class="QPushButton" name="editStadiumData_submitButton">
+                 <property name="text">
+                  <string>Submit</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="0">
+                <widget class="QPushButton" name="editStadiumData_resetButton">
+                 <property name="text">
+                  <string>Reset</string>
+                 </property>
+                </widget>
                </item>
               </layout>
              </item>
@@ -510,55 +517,6 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="coachesTab">
-       <attribute name="title">
-        <string>Coaches</string>
-       </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_7">
-        <item>
-         <spacer name="horizontalSpacer_9">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>569</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QTableView" name="coaches_tableView">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="sizeAdjustPolicy">
-           <enum>QAbstractScrollArea::AdjustToContents</enum>
-          </property>
-          <attribute name="verticalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_10">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>569</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </widget>
       <widget class="QWidget" name="arenasTab">
        <attribute name="title">
         <string>Arenas</string>
@@ -640,8 +598,17 @@
           </item>
           <item>
            <widget class="QLCDNumber" name="arenas_seating_lcdNumber">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="digitCount">
              <number>10</number>
+            </property>
+            <property name="segmentStyle">
+             <enum>QLCDNumber::Flat</enum>
             </property>
            </widget>
           </item>
@@ -770,7 +737,7 @@
         <item>
          <widget class="QFrame" name="frame_4">
           <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
+           <enum>QFrame::Box</enum>
           </property>
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>

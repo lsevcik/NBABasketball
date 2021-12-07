@@ -18,23 +18,25 @@ SOURCES += \
     mainwindow.cpp \
     mainwindow_admin.cpp \
     mainwindow_conferences.cpp \
-    mainwindow_coaches.cpp \
     mainwindow_arenas.cpp \
     mainwindow_souvenirs.cpp \
     loginDialog.cpp \
     mainwindow_plan.cpp \
-    stadium.cpp
+    stadium.cpp \
+    importDialog.cpp
 
 HEADERS += \
     seed.h \
     controller.h \
     mainwindow.h \
     loginDialog.h \
-    stadium.h
+    stadium.h \
+    importDialog.h
 
 FORMS += \
     mainwindow.ui \
-    loginDialog.ui
+    loginDialog.ui \
+    importDialog.ui
 
 RESOURCES += images/images.qrc
 
