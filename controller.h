@@ -48,48 +48,70 @@ public:
 
     // FUNCTIONS AND CONTAINERS FOR MST
 
-    class DSU {
+    struct Graph
+    {
+        int V, E;
+        QMap<float, QVector<int>> edges;
 
-        int *parent;
-        int *rank;
+        Graph(int V, int E) {
 
-    public:
+            this->V = V;
+            this->E = E;
+        }
 
-        DSU(int n) {
-            parent = new int[n];
-            rank = new int [n];
-            for (int i = 0; i < n; i++) {
-                parent[i] = -1;
-                rank[i] = -1;
+        void addEdge(int u, int v, float w) {
+
+            edges[w].push_back(u);
+            edges[w].push_back(v);
+        }
+
+        int KruskalMST();
+    };
+
+    struct DisjointSets
+    {
+        int *parent, *rnk;
+        int n;
+
+        DisjointSets(int n) {
+
+            this->n = n;
+            parent = new int[n+1];
+            rnk = new int[n+1];
+
+            for (int i = 0; i <= n; i++) {
+
+                rnk[i] = 0;
+                parent[i] = i;
             }
         }
 
-        int find(int i) {
-            if (parent[i] == -1)
-                return i;
-            return parent[i] = find(parent[i]);
+        int find(int u) {
+
+            if (u != parent[u])
+                parent[u] = find(parent[u]);
+            return parent[u];
         }
 
-        void unite(int x, int y) {
-            int s1 = find(x);
-            int s2 = find(y);
-            if (s1 != s2) {
-                if (rank[s1] < rank[s2]) {
-                    parent[s1] = s2;
-                    rank[s2] += rank[s1];
-                } else {
-                    parent[s2] = s1;
-                    rank[s1] += rank[s2];
-                }
-            }
+        void merge(int x, int y) {
+
+            x = find(x), y = find(y);
+
+            if (rnk[x] > rnk[y])
+                parent[y] = x;
+            else
+                parent[x] = y;
+
+            if (rnk[x] == rnk[y])
+                rnk[y]++;
         }
     };
 
-
-
-    QMap<float, QVector<int>> MSTadjList;
+//    QVector<float, QVector<int>
+    QMap<float, QVector<int>> edgeList;
     QVector<QString> MSTListOfTeams;
 
+    int findIndex(QString teamName);
     void populateMSTAdjList();
 
 private:
