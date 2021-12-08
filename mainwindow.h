@@ -80,6 +80,8 @@ private:
     double dijkstra(const QString &, const QString &);
     void orderedDijkstra(QStringList);
     void recursiveDijkstra(QStringList);
+    void startDFS(int index);
+    void startBFS(int index);
 };
 
 #endif // MAINWINDOW_H

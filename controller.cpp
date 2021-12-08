@@ -13,35 +13,10 @@ Controller::Controller(QObject * parent) : QObject(parent)
     }
 
     seed();
-
-    populateListOfTeams();
-
-    for (int i = 0; i < adjList.size(); i++) {
-
-        qDebug() << i << ": " << listOfTeams[i] << "'s edges...";
-
-        for (int j = 0; j < adjList[i].size(); j++) {
-
-            qDebug() << adjList[i][j].destinationTeam << ": "
-                     << listOfTeams[adjList[i][j].destinationTeam] << " "
-                     << adjList[i][j].distance;
-        }
-        qDebug() << "--------------------------";
-    }
-
-//    DFS(22-1);
-    BFS(14-1);
-
-    for (int i = 0; i < completedDFSBFS.size(); i++) {
-
-        qDebug() << completedDFSBFS[i] << "--->";
-    }
-
-    qDebug() << DFSBFS_Distance;
 }
 
-void Controller::editStadiumData(QString conference, QString division, QString teamName,
-                     QString location, QString newArenaName, QString oldArenaName, int stadiumCapacity,
+void Controller::editStadiumData(QString conference, QString division, QString newTeamName,
+                     QString oldTeamName, QString location, QString arenaName, int stadiumCapacity,
                      int joinedLeague, QString coach)
 {
     QSqlQuery qry;
@@ -55,17 +30,17 @@ void Controller::editStadiumData(QString conference, QString division, QString t
                 "[Stadium Capacity]  = ?,  "
                 "[Joined League]     = ?,  "
                 "[Coach]             = ?   "
-                "WHERE [Arena Name]  = ?   ");
+                "WHERE [Team Name]  =  ?   ");
 
     qry.addBindValue(conference);
     qry.addBindValue(division);
-    qry.addBindValue(teamName);
+    qry.addBindValue(newTeamName);
     qry.addBindValue(location);
-    qry.addBindValue(newArenaName);
+    qry.addBindValue(arenaName);
     qry.addBindValue(stadiumCapacity);
     qry.addBindValue(QString::number(joinedLeague));
     qry.addBindValue(coach);
-    qry.addBindValue(oldArenaName);
+    qry.addBindValue(oldTeamName);
 
     if (!qry.exec())
         throw std::runtime_error(qry.lastError().text().toStdString());

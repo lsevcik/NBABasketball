@@ -6,7 +6,8 @@
 
 void MainWindow::constructPlansTab() {
     m_startingTeamsModel.setQuery(
-        "SELECT [Team Name] FROM [Stadiums] WHERE [Enabled]=1");
+        "SELECT [Team Name] FROM [Stadiums] "
+        "WHERE [Enabled]=1 ORDER BY [Team Name] ASC");
     ui->plan_startingComboBox->setModel(&m_startingTeamsModel);
     ui->plan_currentListView->setModel(&m_currentTeamsModel);
     ui->plan_availableListView->setModel(&m_availableTeamsModel);
@@ -60,6 +61,15 @@ void MainWindow::resetPlan(const QString &searchType, const QString &startingTea
         m_availableTeamsModel.setQuery(
             "SELECT [Team Name] FROM [Stadiums] WHERE [Team Name] != '" +
             startingTeam + "' AND [Enabled]=1");
+    }
+    else if (searchType.contains("DFS")) {
+
+        startDFS(ui->plan_startingComboBox->currentIndex());
+    }
+
+    else if (searchType.contains("BFS")) {
+
+        startBFS(ui->plan_startingComboBox->currentIndex());
     }
 }
 
@@ -139,4 +149,22 @@ double MainWindow::dijkstra(const QString &src, const QString &dest){
     if (path == dist.end())
         return std::numeric_limits<double>::infinity();
     return path->second;
+}
+
+void MainWindow::startDFS(int index) {
+
+    m_controller->populateListOfTeams();
+    m_controller->displayListOfTeams();
+    m_controller->DFS(index);
+    m_controller->displayDFSBFS();
+    ui->plan_distanceLCD->display(m_controller->DFSBFS_Distance);
+}
+
+void MainWindow::startBFS(int index) {
+
+    m_controller->populateListOfTeams();
+    m_controller->displayListOfTeams();
+    m_controller->BFS(index);
+    m_controller->displayDFSBFS();
+    ui->plan_distanceLCD->display(m_controller->DFSBFS_Distance);
 }

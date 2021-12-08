@@ -67,6 +67,7 @@ void Controller::populateListOfTeams() {
     resetListOfTeams();
     QSqlQueryModel model;
     model.setQuery("SELECT DISTINCT [Team Name] FROM [Stadiums] "
+                   "WHERE [Enabled]=1 "
                    "ORDER BY [Team Name] ASC");
 
     for (int i = 0; i < model.rowCount(); i++) {
@@ -79,15 +80,15 @@ void Controller::populateListOfTeams() {
     qDebug() << listOfTeams.size();
 
     model.clear();
-//    model.setQuery("SELECT [StartTeam], [DestinationTeam], [Distance] "
-//                   "FROM Distances d "
-//                   "INNER JOIN Stadiums s1 ON s1.[Team Name] = d.StartTeam "
-//                   "INNER JOIN Stadiums s2 ON s2.[Team Name] = d.DestinationTeam "
-//                   "WHERE (s1.Enabled + s2.Enabled) = 2 "
-//                   "ORDER BY [StartTeam], [Distance] ASC;");
     model.setQuery("SELECT [StartTeam], [DestinationTeam], [Distance] "
-                   "FROM [Distances] "
-                   "ORDER BY [StartTeam], [Distance] ASC");
+                   "FROM Distances d "
+                   "INNER JOIN Stadiums s1 ON s1.[Team Name] = d.StartTeam "
+                   "INNER JOIN Stadiums s2 ON s2.[Team Name] = d.DestinationTeam "
+                   "WHERE (s1.Enabled + s2.Enabled) = 2 "
+                   "ORDER BY [StartTeam], [Distance] ASC;");
+//    model.setQuery("SELECT [StartTeam], [DestinationTeam], [Distance] "
+//                   "FROM [Distances] "
+//                   "ORDER BY [StartTeam], [Distance] ASC");
 
     for (int i = 0; i < adjList.size(); i++) {
 
@@ -118,4 +119,34 @@ void Controller::resetListOfTeams() {
     adjList.clear();
     completedDFSBFS.clear();
     listOfTeams.clear();
+}
+
+void Controller::displayListOfTeams() {
+
+    qDebug() << "\nDISPLAYING ADJACENCY LIST...";
+
+    for (int i = 0; i < adjList.size(); i++) {
+
+        qDebug() << i << ": " << listOfTeams[i] << "'s edges...";
+
+        for (int j = 0; j < adjList[i].size(); j++) {
+
+            qDebug() << adjList[i][j].destinationTeam << ": "
+                     << listOfTeams[adjList[i][j].destinationTeam] << " "
+                     << adjList[i][j].distance;
+        }
+        qDebug() << "--------------------------";
+    }
+}
+
+void Controller::displayDFSBFS() {
+
+    qDebug() << "\nDISPLAYING DFS/BFS...";
+
+    for (int i = 0; i < completedDFSBFS.size(); i++) {
+
+        qDebug() << completedDFSBFS[i] << "--->";
+    }
+
+    qDebug() << DFSBFS_Distance;
 }
