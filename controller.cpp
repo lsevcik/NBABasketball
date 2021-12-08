@@ -13,6 +13,7 @@ Controller::Controller(QObject * parent) : QObject(parent)
     }
 
     seed();
+
     populateListOfTeams();
 
     for (int i = 0; i < adjList.size(); i++) {
@@ -28,7 +29,15 @@ Controller::Controller(QObject * parent) : QObject(parent)
         qDebug() << "--------------------------";
     }
 
+//    DFS(22-1);
+    BFS(14-1);
 
+    for (int i = 0; i < completedDFS.size(); i++) {
+
+        qDebug() << completedDFS[i] << "--->";
+    }
+
+    qDebug() << DFS_Distance;
 }
 
 void Controller::editStadiumData(QString conference, QString division, QString teamName,

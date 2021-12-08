@@ -8,6 +8,7 @@
 #include <QSqlError>
 #include <QVector>
 #include <QMap>
+#include <QQueue>
 #include "stadium.h"
 
 class Controller : public QObject
@@ -37,7 +38,7 @@ public:
     void resetRecursiveTrip();
     void displayRecursiveTrip();
 
-    // FUNCTIONS AND CONTAINERS FOR DFS
+    // FUNCTIONS AND CONTAINERS FOR DFS/BFS
 
     struct Edge
     {
@@ -51,10 +52,10 @@ public:
     QVector<QString> listOfTeams;
 
     void populateListOfTeams();
+    void resetListOfTeams();
     void DFS(int startTeam);
+    void BFS(int startTeam);
     void addDistance(float distance);
-    int findIndex(QString teamToFind);
-
 
     float DFS_Distance = 0;
 

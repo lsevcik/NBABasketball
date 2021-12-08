@@ -17,6 +17,36 @@ void Controller::DFS(int startTeam) {
     }
 }
 
+void Controller::BFS(int startTeam) {
+
+    QList<int> queue;
+
+    visited[startTeam] = true;
+    queue.push_back(startTeam);
+    qDebug() << "pushing back: " << listOfTeams[startTeam] << "....";
+    completedDFS.push_back(listOfTeams[startTeam]);
+
+    while (!queue.empty()) {
+
+        startTeam = queue.front();
+        queue.pop_front();
+        qDebug() << "popping front: " <<  listOfTeams[startTeam] << "....";
+
+        for (int i = 0; i < adjList[startTeam].size(); i++) {
+
+            if (!visited[adjList[startTeam][i].destinationTeam]) {
+
+                visited[adjList[startTeam][i].destinationTeam] = true;
+                queue.push_back(adjList[startTeam][i].destinationTeam);
+                completedDFS.push_back(listOfTeams[adjList[startTeam][i].destinationTeam]);
+                addDistance(adjList[startTeam][i].distance);
+                qDebug() << "pushing back: " << listOfTeams[adjList[startTeam][i].destinationTeam] << "....";
+
+            }
+        }
+    }
+}
+
 void Controller::addDistance(float distance) {
 
     DFS_Distance += distance;
@@ -24,32 +54,30 @@ void Controller::addDistance(float distance) {
 
 void Controller::populateListOfTeams() {
 
-    qDebug() << "populating";
-    DFS_Distance = 0;
-    visited.clear();
-    adjList.clear();
-    completedDFS.clear();
-    listOfTeams.clear();
-
+    resetListOfTeams();
     QSqlQueryModel model;
     model.setQuery("SELECT DISTINCT [Team Name] FROM [Stadiums] "
-                   "WHERE [Enabled]=1"
                    "ORDER BY [Team Name] ASC");
 
     for (int i = 0; i < model.rowCount(); i++) {
 
-        qDebug() << "yoyoyo";
-        qDebug() << model.record(i).value("StartTeam").toString();
-        listOfTeams.append(model.record(i).value("StartTeam").toString());
+        qDebug() << model.record(i).value("Team Name").toString();
+        listOfTeams.append(model.record(i).value("Team Name").toString());
         adjList[i].append(QVector<Edge>());
     }
 
+    qDebug() << listOfTeams.size();
+
     model.clear();
-    model.setQuery("SELECT [StartTeam], [DestinationTeam], [Distance]"
-                   "FROM Distances d"
-                   "INNER JOIN Stadiums s1 ON s1.[Team Name] = d.StartTeam"
-                   "INNER JOIN Stadiums s2 ON s2.[Team Name] = d.DestinationTeam"
-                   "WHERE s1.Enabled + s2.Enabled = 2;");
+//    model.setQuery("SELECT [StartTeam], [DestinationTeam], [Distance] "
+//                   "FROM Distances d "
+//                   "INNER JOIN Stadiums s1 ON s1.[Team Name] = d.StartTeam "
+//                   "INNER JOIN Stadiums s2 ON s2.[Team Name] = d.DestinationTeam "
+//                   "WHERE (s1.Enabled + s2.Enabled) = 2 "
+//                   "ORDER BY [StartTeam], [Distance] ASC;");
+    model.setQuery("SELECT [StartTeam], [DestinationTeam], [Distance] "
+                   "FROM [Distances] "
+                   "ORDER BY [StartTeam], [Distance] ASC");
 
     for (int i = 0; i < adjList.size(); i++) {
 
@@ -71,4 +99,13 @@ void Controller::populateListOfTeams() {
             }
         }
     }
+}
+
+void Controller::resetListOfTeams() {
+
+    DFS_Distance = 0;
+    visited.clear();
+    adjList.clear();
+    completedDFS.clear();
+    listOfTeams.clear();
 }
