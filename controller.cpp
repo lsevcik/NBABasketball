@@ -14,6 +14,23 @@ Controller::Controller(QObject * parent) : QObject(parent)
 
     seed();
     populateListOfTeams();
+    for (int i = 0; i < adjList.size(); i++) {
+
+        qDebug() << listOfTeams[i] << "'s edges...";
+
+        for (int j = 0; j < adjList[i].size(); j++) {
+
+            qDebug() << listOfTeams[adjList[i][j].destinationTeam] << " "
+                     << adjList[i][j].distance;
+        }
+        qDebug() << "--------------------------";
+    }
+    qDebug() << "Starting DFS-------------------";
+    DFS(22);
+    for (int i = 0; i < completedDFS.size(); i++)
+        qDebug() << completedDFS[i] << "-->";
+
+    qDebug() << DFS_Distance;
 }
 
 void Controller::editStadiumData(QString conference, QString division, QString teamName,
