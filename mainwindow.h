@@ -42,6 +42,10 @@ private slots:
     void on_admin_importButton_clicked();
     void on_editSouvenir_comboBox_currentTextChanged(const QString &arg1);
     void on_plan_purchaseButton_clicked();
+    void on_plan_searchComboBox_currentTextChanged(const QString &);
+    void on_plan_startingComboBox_currentTextChanged(const QString &);
+    void on_plan_addTeamButton_clicked();
+    void on_plan_resetButton_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -57,6 +61,9 @@ private:
     QSqlQueryModel m_adminStadiumsModel;
     QSqlQueryModel m_adminSouvenirsModel;
     QSqlQueryModel m_souvenirsTeamsModel;
+    QSqlQueryModel m_startingTeamsModel;
+    QSqlQueryModel m_availableTeamsModel;
+    QStringListModel m_currentTeamsModel;
     QStandardItemModel m_conferencesStandardModel;
     QStandardItemModel m_conferencesPreviewModel;
     void setupShortcuts();
@@ -64,10 +71,15 @@ private:
     void constructConferencesTab();
     void constructArenasTab();
     void constructSouvenirsTab();
+    void constructPlansTab();
     void setupAdminModels();
     void on_souvenir_selectionChanged(const QItemSelection &, const QItemSelection &);
     void updateSouvenirsLogo(QString);
     void updateSouvenirsList(QString);
+    void resetPlan(const QString&, const QString&);
+    double dijkstra(const QString &, const QString &);
+    void orderedDijkstra(QStringList);
+    void recursiveDijkstra(QStringList);
 };
 
 #endif // MAINWINDOW_H

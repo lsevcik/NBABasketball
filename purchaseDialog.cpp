@@ -13,7 +13,7 @@ ui(new Ui::purchaseDialog)
     ui->setupUi(this);
 }
 
-int purchaseDialog::exec(const std::vector<QString>& teams) {
+int purchaseDialog::exec(const QStringList& teams) {
     QSqlQueryModel souvenirModel;
     auto treeWidget = ui->treeWidget;
     treeWidget->clear();

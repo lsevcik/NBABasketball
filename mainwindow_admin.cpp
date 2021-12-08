@@ -156,4 +156,5 @@ void MainWindow::on_addSouvenir_pushButton_clicked() {
 
 void MainWindow::on_admin_importButton_clicked() {
     m_importDialog->exec();
+    refreshDataViews();
 }
