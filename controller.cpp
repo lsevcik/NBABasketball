@@ -13,6 +13,31 @@ Controller::Controller(QObject * parent) : QObject(parent)
     }
 
     seed();
+
+    populateListOfTeams();
+
+    for (int i = 0; i < adjList.size(); i++) {
+
+        qDebug() << i << ": " << listOfTeams[i] << "'s edges...";
+
+        for (int j = 0; j < adjList[i].size(); j++) {
+
+            qDebug() << adjList[i][j].destinationTeam << ": "
+                     << listOfTeams[adjList[i][j].destinationTeam] << " "
+                     << adjList[i][j].distance;
+        }
+        qDebug() << "--------------------------";
+    }
+
+//    DFS(22-1);
+    BFS(14-1);
+
+    for (int i = 0; i < completedDFSBFS.size(); i++) {
+
+        qDebug() << completedDFSBFS[i] << "--->";
+    }
+
+    qDebug() << DFSBFS_Distance;
 }
 
 void Controller::editStadiumData(QString conference, QString division, QString teamName,

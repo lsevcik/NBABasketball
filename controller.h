@@ -7,6 +7,8 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QVector>
+#include <QMap>
+#include <QQueue>
 #include "stadium.h"
 
 class Controller : public QObject
@@ -21,18 +23,26 @@ public:
                          QString location, QString newArenaName, QString oldArenaName, int stadiumCapacity,
                          int joinedLeague, QString coach);
 
-    // FUNCTIONS AND CONTAINERS FOR RECURSIVE ALG
-    QVector<Stadium*> tripList;
-    QVector<Stadium*> completedTrip;
+    // FUNCTIONS AND CONTAINERS FOR DFS/BFS
 
-    int getTeamCount();
-    void createRecursiveTripList();
-//    void createCustomRecursiveTripList();
-    void resetRecursiveTripLists();
-    void displayRecursiveTripList();
-    void createRecursiveTrip(QString startTeam);
-    void resetRecursiveTrip();
-    void displayRecursiveTrip();
+    struct Edge
+    {
+        int destinationTeam;
+        float distance;
+    };
+
+    QMap<int, bool> visited;
+    QMap<int, QVector<Edge>> adjList;
+    QVector<QString> completedDFSBFS; //completed dfs/bfs
+    QVector<QString> listOfTeams;
+
+    void populateListOfTeams(); //creates adjacency list
+    void resetListOfTeams();    //resets all containers related to dfs/bfs
+    void DFS(int startTeam);    //dfs
+    void BFS(int startTeam);    //bfs
+    void addDistance(float distance); //gets total distance
+
+    float DFSBFS_Distance = 0; //total distance variable
 
 private:
 
@@ -40,5 +50,7 @@ private:
     void seed();
     void seedDefaultSouvenirs(const QString &);
 };
+
+
 
 #endif // CONTROLLER_H

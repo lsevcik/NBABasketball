@@ -11,7 +11,7 @@ private:
     QString startTeam;
     QString startStadium;
     QString destinationTeam;
-    int distance;
+    float distance;
 
 public:
     explicit Stadium(QObject * parent = nullptr);
@@ -22,7 +22,7 @@ public:
     void setStartTeam(const QString &item);
     void setStartStadium(const QString &item);
     void setDestinationTeam(const QString &item);
-    void setDistance(int item);
+    void setDistance(float item);
 };
 
 #endif // STADIUM_H
