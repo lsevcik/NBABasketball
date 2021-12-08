@@ -9,6 +9,7 @@
 #include <QVector>
 #include <QMap>
 #include <QQueue>
+#include <QPair>
 #include "stadium.h"
 
 class Controller : public QObject
@@ -51,7 +52,7 @@ public:
     struct Graph
     {
         int V, E;
-        QMap<float, QVector<int>> edges;
+        QMap<float, QPair<int, int>> edges;
 
         Graph(int V, int E) {
 
@@ -61,8 +62,8 @@ public:
 
         void addEdge(int u, int v, float w) {
 
-            edges[w].push_back(u);
-            edges[w].push_back(v);
+//            edges[w].push_back(u);
+//            edges[w].push_back(v);
         }
 
         int KruskalMST();
