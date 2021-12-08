@@ -3,7 +3,7 @@
 void Controller::DFS(int startTeam) {
 
     visited[startTeam] = true;
-    completedDFS.push_front(listOfTeams[startTeam]);
+    completedDFS.push_back(listOfTeams[startTeam]);
 
     for (int i = 0; i < adjList[startTeam].size(); i++) {
 
@@ -24,6 +24,7 @@ void Controller::addDistance(float distance) {
 
 void Controller::populateListOfTeams() {
 
+    qDebug() << "populating";
     DFS_Distance = 0;
     visited.clear();
     adjList.clear();
@@ -31,19 +32,24 @@ void Controller::populateListOfTeams() {
     listOfTeams.clear();
 
     QSqlQueryModel model;
-    model.setQuery("SELECT DISTINCT [StartTeam] FROM [Distances] "
-                   "ORDER BY [StartTeam], [Distance] ASC");
+    model.setQuery("SELECT DISTINCT [Team Name] FROM [Stadiums] "
+                   "WHERE [Enabled]=1"
+                   "ORDER BY [Team Name] ASC");
 
     for (int i = 0; i < model.rowCount(); i++) {
 
-//        qDebug() << model.record(i).value("StartTeam").toString();
+        qDebug() << "yoyoyo";
+        qDebug() << model.record(i).value("StartTeam").toString();
         listOfTeams.append(model.record(i).value("StartTeam").toString());
         adjList[i].append(QVector<Edge>());
     }
 
     model.clear();
-    model.setQuery("SELECT * FROM [Distances] "
-                   "ORDER BY [StartTeam], [Distance] ASC");
+    model.setQuery("SELECT [StartTeam], [DestinationTeam], [Distance]"
+                   "FROM Distances d"
+                   "INNER JOIN Stadiums s1 ON s1.[Team Name] = d.StartTeam"
+                   "INNER JOIN Stadiums s2 ON s2.[Team Name] = d.DestinationTeam"
+                   "WHERE s1.Enabled + s2.Enabled = 2;");
 
     for (int i = 0; i < adjList.size(); i++) {
 
@@ -65,15 +71,4 @@ void Controller::populateListOfTeams() {
             }
         }
     }
-
-//    for (int i = 0; i < adjList.size(); i++) {
-
-//        qDebug() << i << ": ";
-
-//        for (int j = 0; j < adjList[i].size(); j++) {
-
-//            qDebug() << adjList[i][j].destinationTeam << " -- " << adjList[i][j].distance;
-
-//        }
-//    }
 }
