@@ -32,12 +32,12 @@ Controller::Controller(QObject * parent) : QObject(parent)
 //    DFS(22-1);
     BFS(14-1);
 
-    for (int i = 0; i < completedDFS.size(); i++) {
+    for (int i = 0; i < completedDFSBFS.size(); i++) {
 
-        qDebug() << completedDFS[i] << "--->";
+        qDebug() << completedDFSBFS[i] << "--->";
     }
 
-    qDebug() << DFS_Distance;
+    qDebug() << DFSBFS_Distance;
 }
 
 void Controller::editStadiumData(QString conference, QString division, QString teamName,

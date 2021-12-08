@@ -3,7 +3,7 @@
 void Controller::DFS(int startTeam) {
 
     visited[startTeam] = true;
-    completedDFS.push_back(listOfTeams[startTeam]);
+    completedDFSBFS.push_back(listOfTeams[startTeam]);
 
     for (int i = 0; i < adjList[startTeam].size(); i++) {
 
@@ -24,7 +24,7 @@ void Controller::BFS(int startTeam) {
     visited[startTeam] = true;
     queue.push_back(startTeam);
     qDebug() << "pushing back: " << listOfTeams[startTeam] << "....";
-    completedDFS.push_back(listOfTeams[startTeam]);
+    completedDFSBFS.push_back(listOfTeams[startTeam]);
 
     while (!queue.empty()) {
 
@@ -32,13 +32,23 @@ void Controller::BFS(int startTeam) {
         queue.pop_front();
         qDebug() << "popping front: " <<  listOfTeams[startTeam] << "....";
 
+
+        for (int i = 0; i < adjList[startTeam].size(); i++) {
+
+            if (!visited[adjList[startTeam][i].destinationTeam]) {
+
+                qDebug() << "adj: " << listOfTeams[adjList[startTeam][i].destinationTeam]
+                         << adjList[startTeam][i].distance;
+            }
+        }
+
         for (int i = 0; i < adjList[startTeam].size(); i++) {
 
             if (!visited[adjList[startTeam][i].destinationTeam]) {
 
                 visited[adjList[startTeam][i].destinationTeam] = true;
                 queue.push_back(adjList[startTeam][i].destinationTeam);
-                completedDFS.push_back(listOfTeams[adjList[startTeam][i].destinationTeam]);
+                completedDFSBFS.push_back(listOfTeams[adjList[startTeam][i].destinationTeam]);
                 addDistance(adjList[startTeam][i].distance);
                 qDebug() << "pushing back: " << listOfTeams[adjList[startTeam][i].destinationTeam] << "....";
 
@@ -49,7 +59,7 @@ void Controller::BFS(int startTeam) {
 
 void Controller::addDistance(float distance) {
 
-    DFS_Distance += distance;
+    DFSBFS_Distance += distance;
 }
 
 void Controller::populateListOfTeams() {
@@ -103,9 +113,9 @@ void Controller::populateListOfTeams() {
 
 void Controller::resetListOfTeams() {
 
-    DFS_Distance = 0;
+    DFSBFS_Distance = 0;
     visited.clear();
     adjList.clear();
-    completedDFS.clear();
+    completedDFSBFS.clear();
     listOfTeams.clear();
 }
