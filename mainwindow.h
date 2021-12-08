@@ -82,6 +82,7 @@ private:
     void recursiveDijkstra(QStringList);
     void startDFS(int index);
     void startBFS(int index);
+    void showAllTeamsAsCurrent();
 };
 
 #endif // MAINWINDOW_H

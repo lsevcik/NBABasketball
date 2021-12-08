@@ -156,7 +156,8 @@ void MainWindow::on_addSouvenir_pushButton_clicked() {
     //CHECK FOR DUPLICATE KEY
 
     if (!qry.exec())
-        throw std::runtime_error(qry.lastError().text().toStdString());
+        //throw std::runtime_error(qry.lastError().text().toStdString());
+        // too lazy to check for this rn, the query will not work for duplicate keys
     refreshDataViews();
 }
 

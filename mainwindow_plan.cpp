@@ -158,6 +158,7 @@ void MainWindow::startDFS(int index) {
     m_controller->DFS(index);
     m_controller->displayDFSBFS();
     ui->plan_distanceLCD->display(m_controller->DFSBFS_Distance);
+    showAllTeamsAsCurrent();
 }
 
 void MainWindow::startBFS(int index) {
@@ -167,4 +168,15 @@ void MainWindow::startBFS(int index) {
     m_controller->BFS(index);
     m_controller->displayDFSBFS();
     ui->plan_distanceLCD->display(m_controller->DFSBFS_Distance);
+    showAllTeamsAsCurrent();
+}
+
+void MainWindow::showAllTeamsAsCurrent() {
+    QStringList qslTeams;
+    QSqlQueryModel mTeams;
+    mTeams.setQuery(
+        "SELECT [Team Name] FROM Stadiums WHERE [Enabled]=1");
+    for (int i = 0; i < mTeams.rowCount(); ++i)
+        qslTeams << mTeams.record(i).value(0).toString();
+    m_currentTeamsModel.setStringList(qslTeams);
 }

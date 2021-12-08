@@ -23,6 +23,7 @@ private slots:
 
 private:
     Ui::purchaseDialog *ui;
+    void calculate();
 };
 
 #endif // PURCHASEDIALOG_H
