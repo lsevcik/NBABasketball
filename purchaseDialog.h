@@ -15,7 +15,7 @@ class purchaseDialog : public QDialog
 
 public:
     explicit purchaseDialog(QWidget *parent);
-    int exec(const std::vector<QString>&);
+    int exec(const QStringList &);
     ~purchaseDialog();
 
 private slots:
@@ -23,6 +23,7 @@ private slots:
 
 private:
     Ui::purchaseDialog *ui;
+    void calculate();
 };
 
 #endif // PURCHASEDIALOG_H

@@ -684,7 +684,21 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
-           <widget class="QComboBox" name="comboBox">
+           <widget class="QComboBox" name="plan_startingComboBox">
+            <item>
+             <property name="text">
+              <string>Starting City</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="plan_searchComboBox">
+            <item>
+             <property name="text">
+              <string>Search Type</string>
+             </property>
+            </item>
             <item>
              <property name="text">
               <string>DFS</string>
@@ -702,16 +716,12 @@
             </item>
             <item>
              <property name="text">
-              <string>Dijkstra</string>
+              <string>Dijkstra Efficient</string>
              </property>
             </item>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="plan_startingComboBox">
             <item>
              <property name="text">
-              <string>Starting City</string>
+              <string>Dijkstra Ordered</string>
              </property>
             </item>
            </widget>
@@ -739,28 +749,28 @@
              <item>
               <widget class="QLabel" name="label_2">
                <property name="text">
-                <string>Current Cities</string>
+                <string>Current Teams</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QListView" name="listView_2"/>
+              <widget class="QListView" name="plan_currentListView"/>
              </item>
             </layout>
            </item>
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_4">
              <item>
-              <widget class="QPushButton" name="pushButton">
+              <widget class="QPushButton" name="plan_addTeamButton">
                <property name="text">
                 <string>&lt;&lt;</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_2">
+              <widget class="QPushButton" name="plan_resetButton">
                <property name="text">
-                <string>&gt;&gt;</string>
+                <string>Reset</string>
                </property>
               </widget>
              </item>
@@ -771,12 +781,12 @@
              <item>
               <widget class="QLabel" name="label_3">
                <property name="text">
-                <string>Available Cities</string>
+                <string>Available Teams</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QListView" name="listView"/>
+              <widget class="QListView" name="plan_availableListView"/>
              </item>
             </layout>
            </item>

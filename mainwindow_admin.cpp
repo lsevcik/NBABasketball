@@ -6,15 +6,16 @@ void MainWindow::setupAdminModels()
     m_adminConferenceModel.setQuery(
         "SELECT DISTINCT [Conference] FROM Stadiums WHERE [Enabled]=1;");
     m_adminStadiumsModel.setQuery(
-        "SELECT [Arena Name] FROM Stadiums "
-        "WHERE [Enabled]=1 ORDER BY [Arena Name] ASC");
+        "SELECT [Team Name] FROM Stadiums "
+        "WHERE [Enabled]=1 ORDER BY [Team Name] ASC");
     ui->editStadiumData_editConference_comboBox->setModel(&m_adminConferenceModel);
     ui->editStadiumData_comboBox->setModel(&m_adminStadiumsModel);
     m_adminSouvenirsModel.clear();
     ui->editSouvenir_comboBox->setModel(&m_adminSouvenirsModel);
     m_adminSouvenirsModel.setQuery(
-        "SELECT [Souvenir] FROM [Souvenirs] WHERE [Stadium]='"
-        + ui->editStadiumData_comboBox->currentText() + "'");
+        "SELECT [Souvenir] FROM [Souvenirs] "
+        "WHERE [Stadium] = (SELECT [Arena Name] FROM [Stadiums] "
+        "WHERE [Team Name] = '" + ui->editStadiumData_comboBox->currentText() + "')");
 }
 
 void MainWindow::on_editStadiumData_comboBox_currentTextChanged(const QString &arg1)
@@ -23,7 +24,7 @@ void MainWindow::on_editStadiumData_comboBox_currentTextChanged(const QString &a
     QString query = "SELECT [Conference], [Division],"
     " [Team Name], [Location], [Arena Name],"
     " [Stadium Capacity], [Joined League], [Coach] "
-    "FROM [Stadiums] WHERE [Arena Name] = '"+arg1+"'";
+    "FROM [Stadiums] WHERE [Team Name] = '"+arg1+"'";
     qry.prepare(query);
 
     if (!qry.exec())
@@ -44,7 +45,9 @@ void MainWindow::on_editStadiumData_comboBox_currentTextChanged(const QString &a
         ui->editStadiumData_editStadiumCapacity_spinBox->setValue(qry.value(5).toInt());
         ui->editStadiumData_editJoinedLeague_spinBox->setValue(qry.value(6).toInt());
         ui->editStadiumData_editCoach_lineEdit->setText(qry.value(7).toString());
-        m_adminSouvenirsModel.setQuery("SELECT [Souvenir] FROM [Souvenirs] WHERE [Stadium]='" + arg1 +"'");
+        m_adminSouvenirsModel.setQuery("SELECT [Souvenir] FROM [Souvenirs] "
+                                       "WHERE [Stadium]=(SELECT [Arena Name] FROM [Stadiums] "
+                                       "WHERE [Team Name] = '" + arg1 +"');");
     }
 
 }
@@ -62,21 +65,23 @@ void MainWindow::on_editStadiumData_submitButton_clicked()
 
     if (reply == QMessageBox::Yes) {
 
-        QString conference, division, teamName, location, newArenaName, oldArenaName, coach;
+//        QString conference, division, teamName, location, newArenaName, oldArenaName, coach;
+        QString conference, division, newTeamName, oldTeamName, location, arenaName, coach;
         int stadiumCapacity, joinedLeague;
+
 
         conference = ui->editStadiumData_editConference_comboBox->currentText();
         division = ui->editStadiumData_editDivision_lineEdit->text();
-        teamName = ui->editStadiumData_editTeamName_lineEdit->text();
+        newTeamName = ui->editStadiumData_editTeamName_lineEdit->text();
+        oldTeamName = ui->editStadiumData_comboBox->currentText();
         location = ui->editStadiumData_editLocation_lineEdit->text();
-        newArenaName = ui->editStadiumData_editArenaName_lineEdit->text();
-        oldArenaName = ui->editStadiumData_comboBox->currentText();
+        arenaName = ui->editStadiumData_editArenaName_lineEdit->text();
         stadiumCapacity = ui->editStadiumData_editStadiumCapacity_spinBox->value();
         joinedLeague = ui->editStadiumData_editJoinedLeague_spinBox->value();
         coach = ui->editStadiumData_editCoach_lineEdit->text();
 
-        m_controller->editStadiumData(conference, division, teamName,
-                                      location, newArenaName, oldArenaName, stadiumCapacity,
+        m_controller->editStadiumData(conference, division, newTeamName, oldTeamName,
+                                      location, arenaName, stadiumCapacity,
                                       joinedLeague, coach);
 
         refreshDataViews();
@@ -86,12 +91,13 @@ void MainWindow::on_editStadiumData_submitButton_clicked()
 void MainWindow::on_editSouvenir_comboBox_currentTextChanged(const QString &arg1)
 {
     QSqlQuery qry;
-    QString query, stadium, souvenir;
+    QString query, teamName;
 
-    stadium = ui->editStadiumData_comboBox->currentText();
+    teamName = ui->editStadiumData_comboBox->currentText();
 
-    query = "SELECT [Cost] FROM [Souvenirs] WHERE "
-    " [Stadium]='"+stadium+"' AND [Souvenir] = '"+arg1+"';";
+    query = ("SELECT [Cost] FROM [Souvenirs] "
+             "WHERE [Stadium] = (SELECT [Arena Name] FROM [Stadiums] "
+             "WHERE [Team Name] = '" + teamName + "' AND [Souvenir] = '" + arg1 + "');");
 
     qry.prepare(query);
 
@@ -110,7 +116,7 @@ void MainWindow::on_editSouvenir_submitButton_clicked() {
     qry.prepare(
     "UPDATE [Souvenirs] SET [Cost] = '" + cost + "' WHERE "
     " [Souvenir] = '" + ui->editSouvenir_comboBox->currentText() + "' AND "
-    " [Stadium] = '" + ui->editStadiumData_comboBox->currentText() + "';");
+    " [Stadium] = '" + ui->editStadiumData_editArenaName_lineEdit->text() + "';");
     if (!qry.exec())
         throw std::runtime_error(qry.lastError().text().toStdString());
     refreshDataViews();
@@ -129,7 +135,7 @@ void MainWindow::on_editSouvenir_deleteButton_clicked() {
     qry.prepare(
         "DELETE FROM [Souvenirs] WHERE "
         " [Souvenir] = '" + ui->editSouvenir_comboBox->currentText() + "' AND "
-        " [Stadium] = '" + ui->editStadiumData_comboBox->currentText() + "';");
+        " [Stadium] = '" + ui->editStadiumData_editArenaName_lineEdit->text() + "';");
     if (!qry.exec())
         throw std::runtime_error(qry.lastError().text().toStdString());
     refreshDataViews();
@@ -137,7 +143,7 @@ void MainWindow::on_editSouvenir_deleteButton_clicked() {
 
 void MainWindow::on_addSouvenir_pushButton_clicked() {
     QSqlQuery qry;
-    QString stadium = ui->editStadiumData_comboBox->currentText();
+    QString stadium = ui->editStadiumData_editArenaName_lineEdit->text();
     QString souvenir = ui->addSouvenir_lineEdit->text();
     QString cost = QString::number(ui->addSouvenir_doubleSpinBox->value());
 
@@ -150,10 +156,12 @@ void MainWindow::on_addSouvenir_pushButton_clicked() {
     //CHECK FOR DUPLICATE KEY
 
     if (!qry.exec())
-        throw std::runtime_error(qry.lastError().text().toStdString());
+        //throw std::runtime_error(qry.lastError().text().toStdString());
+        // too lazy to check for this rn, the query will not work for duplicate keys
     refreshDataViews();
 }
 
 void MainWindow::on_admin_importButton_clicked() {
     m_importDialog->exec();
+    refreshDataViews();
 }

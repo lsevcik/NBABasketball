@@ -14,6 +14,22 @@
    <string>Purchase Souvenirs</string>
   </property>
   <layout class="QFormLayout" name="formLayout">
+   <item row="1" column="1">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Save</set>
+     </property>
+     <property name="centerButtons">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="1">
     <widget class="QTreeWidget" name="treeWidget">
      <property name="selectionMode">
@@ -26,7 +42,7 @@
       <bool>true</bool>
      </property>
      <property name="columnCount">
-      <number>3</number>
+      <number>4</number>
      </property>
      <attribute name="headerDefaultSectionSize">
       <number>200</number>
@@ -46,16 +62,11 @@
        <string notr="true">3</string>
       </property>
      </column>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Save</set>
-     </property>
-     <property name="centerButtons">
-      <bool>true</bool>
-     </property>
+     <column>
+      <property name="text">
+       <string notr="true">4</string>
+      </property>
+     </column>
     </widget>
    </item>
   </layout>

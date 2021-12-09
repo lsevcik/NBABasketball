@@ -13,7 +13,8 @@ CONFIG += force_debug_info
 
 SOURCES += \
     controller.cpp \
-    controller_recursiveAlg.cpp \
+    controller_DFS.cpp \
+    controller_MST.cpp \
     main.cpp \
     mainwindow.cpp \
     mainwindow_admin.cpp \

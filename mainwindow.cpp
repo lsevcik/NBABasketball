@@ -40,7 +40,8 @@ void MainWindow::refreshDataViews() {
     constructConferencesTab();
     constructArenasTab();
     constructSouvenirsTab();
-} // All of these currently leak a lot of memory...
+    constructPlansTab();
+}
 
 void MainWindow::loginCallback(bool succ)
 {

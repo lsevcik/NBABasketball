@@ -13,15 +13,15 @@ ui(new Ui::purchaseDialog)
     ui->setupUi(this);
 }
 
-int purchaseDialog::exec(const std::vector<QString>& teams) {
+int purchaseDialog::exec(const QStringList& teams) {
     QSqlQueryModel souvenirModel;
     auto treeWidget = ui->treeWidget;
     treeWidget->clear();
-    treeWidget->setHeaderLabels(QStringList() << "Teams and Foods" << "Cost" << "Quantity");
-    treeWidget->setColumnCount(3);
+    treeWidget->setHeaderLabels(QStringList() << "Teams and Foods" << "Cost" << "Quantity" << "Subtotal");
     treeWidget->header()->setDefaultAlignment(Qt::AlignCenter);
     for (const auto& teamName: teams) {
         auto teamItem = new QTreeWidgetItem();
+        teamItem->setText(3, "0.00");
         teamItem->setText(0, teamName);
         souvenirModel.setQuery(
             "SELECT [Souvenir],[Cost] FROM [Souvenirs] WHERE "
@@ -38,6 +38,7 @@ int purchaseDialog::exec(const std::vector<QString>& teams) {
             quantitySpinBox->setMaximum(999);
             quantitySpinBox->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Minimum);
             quantitySpinBox->setAlignment(Qt::AlignHCenter);
+            connect(quantitySpinBox, QOverload<int>::of(&QSpinBox::valueChanged), this, &purchaseDialog::calculate);
 
             teamItem->addChild(souvenirItem);
             treeWidget->setItemWidget(souvenirItem, 2, quantitySpinBox);
@@ -45,25 +46,36 @@ int purchaseDialog::exec(const std::vector<QString>& teams) {
         treeWidget->addTopLevelItem(teamItem);
     }
     treeWidget->setColumnWidth(1, 60);
+    treeWidget->setColumnWidth(2, 60);
+    treeWidget->setColumnWidth(3, 60);
     return QDialog::exec();
 }
 
-void purchaseDialog::on_buttonBox_accepted() {
+void purchaseDialog::calculate() {
+
     auto model = ui->treeWidget->model();
     double total = 0;
     for (int r = 0; r < model->rowCount(); ++r) {
         auto teamIndex = model->index(r, 0);
-        if (!model->hasChildren(teamIndex))
+        if (!model->hasChildren(teamIndex)) {
             continue;
+        }
+        double subtotal = 0.0;
         for (int r = 0; r < model->rowCount(teamIndex); ++r) {
             auto costIndex = model->index(r, 1, teamIndex);
             auto quantityItem = ui->treeWidget->itemFromIndex(costIndex);
             double cost = model->data(costIndex).toDouble();
             int quantity = reinterpret_cast<QSpinBox*>(ui->treeWidget->itemWidget(quantityItem, 2))->value();
             total += cost * quantity;
+            subtotal += cost * quantity;
         }
+        model->setData(model->index(r, 3), QString::number(subtotal, 'f', 2));
     }
     static_cast<MainWindow *>(this->parentWidget())->purchaseCallback(total);
+}
+
+void purchaseDialog::on_buttonBox_accepted() {
+    calculate();
 }
 
 purchaseDialog::~purchaseDialog()
